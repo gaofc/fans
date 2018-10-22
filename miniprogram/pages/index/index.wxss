@@ -1,0 +1,274 @@
+.page {
+  background-color: #f8f8f8;
+  font-size: 16px;
+  color: #555;
+}
+
+.tab-h {
+  height: 80rpx;
+  width: 670rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+  line-height: 80rpx;
+  background: #fff;
+  font-size: 16px;
+  white-space: nowrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  margin-left: 80rpx;
+}
+.tab-img-view {
+  background-color: #fff;
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.tab-img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  vertical-align: middle;
+  
+}
+
+.tab-item {
+  margin: 0 25rpx;
+  display: inline-block;
+  color: #aaa;
+}
+
+.tab-item.active {
+  color: #555;
+  position: relative;
+}
+
+.tab-item.active:after {
+  content: "";
+  display: block;
+  height: 5rpx;
+  width: 52rpx;
+  background: #000;
+  position: absolute;
+  bottom: 0;
+  left: 5rpx;
+  border-radius: 16rpx;
+}
+
+.item-ans {
+  width: 100%;
+  display: flex;
+  flex-grow: row no-wrap;
+  justify-content: space-between;
+  padding: 30rpx;
+  box-sizing: border-box;
+  height: 150rpx;
+  align-items: center;
+}
+
+.item-content {
+  padding: 0 30rpx 20rpx 30rpx;
+}
+
+.image-one {
+  padding-top: 6rpx;
+  width: 100%;
+  height: 400rpx;
+}
+
+.image-two {
+  width: 373rpx;
+  height: 300rpx;
+  padding-top: 6rpx;
+}
+
+.image-three {
+  width: 247rpx;
+  height: 200rpx;
+  margin-top: 6rpx;
+}
+
+.image {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.operation {
+  width: 100%;
+  display: flex;
+  flex-grow: row no-wrap;
+  justify-content: space-between;
+  padding: 30rpx;
+  padding-left: 100rpx;
+  padding-right: 100rpx;
+  box-sizing: border-box;
+  height: 100rpx;
+  align-items: center;
+  margin-bottom: 20rpx;
+  font-size: 14px;
+}
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  position: relative;
+  padding-right: 30rpx;
+}
+
+.avatar .img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.avatar .doyen {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  bottom: -2px;
+  right: 20rpx;
+}
+
+.expertInfo {
+  font-size: 12px;
+  flex-grow: 2;
+  color: #b0b0b0;
+  line-height: 1.5em;
+}
+
+.expertInfo .name {
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 6px;
+}
+
+.sign-button {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 60rpx;
+  border: 1px solid #555;
+  color: #555;
+}
+.top-mark {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 60rpx;
+  border: 1px solid #4675f9;
+  color: #4675f9;
+}
+
+
+.scoll-h {
+  height: 100%;
+}
+
+.button-icon {
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: middle;
+}
+
+.shedule-button-icon {
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: middle;
+}
+
+.shedule-date {
+  width: 100%;
+  display: flex;
+  flex-grow: row no-wrap;
+  justify-content: space-between;
+  padding-top: 30rpx;
+  box-sizing: border-box;
+  height: 100rpx;
+  align-items: center;
+  margin-bottom: 20rpx;
+  font-size: 14px;
+  color: #b0b0b0;
+  margin-left: 30rpx;
+}
+
+.schedule-item-content {
+  margin-left: 80rpx;
+}
+
+.schedule-item {
+  background-color: #fff;
+  margin-bottom: 20rpx;
+  padding-bottom: 30rpx;
+}
+
+.page-section-title{
+  padding: 0;
+}
+.swiper-item{
+  display: block;
+  height: 150px;
+}
+.page-section-title{
+  margin-top: 60rpx;
+  position: relative;
+}
+.demo-text-1{
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: #1AAD19;
+  color: #FFFFFF;
+  font-size: 36rpx;
+}
+.demo-text-1:before{
+  content: 'xxxxxxxxxxxx';
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.demo-text-2{
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: #2782D7;
+  color: #FFFFFF;
+  font-size: 36rpx;
+}
+.demo-text-2:before{
+  content: 'B';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.demo-text-3{
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: #F1F1F1;
+  color: #353535;
+  font-size: 36rpx;
+}
+.demo-text-3:before{
+  content: 'C';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tobedone {
+  width: 100%;
+  margin-top: 100rpx;
+  text-align: center;
+}

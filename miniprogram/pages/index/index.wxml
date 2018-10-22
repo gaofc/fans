@@ -1,0 +1,361 @@
+<view class="page">
+
+  <view>
+    <view class='tab-img-view'>
+      <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+    </view>
+
+
+    <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+      <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">推荐</view>
+      <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">微博</view>
+      <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">讨论</view>
+      <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">签到</view>
+      <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">行程</view>
+      <view class="tab-item {{currentTab==5?'active':''}}" data-current="5" bindtap="swichNav">集合</view>
+      <view class="tab-item {{currentTab==6?'active':''}}" data-current="6" bindtap="swichNav">活动</view>
+      <view class="tab-item {{currentTab==7?'active':''}}" data-current="7" bindtap="swichNav">周边</view>
+    </scroll-view>
+    <swiper current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx;margin-top:80rpx;">
+      <!--推荐-->
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+          <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='margin-bottom:20rpx;'>
+            <block wx:for="{{background}}" wx:key="*this">
+              <swiper-item>
+                <view class="swiper-item {{item}}">
+                  <image style='width:100%;' src='../../images/tmp.jpg'></image>
+
+                </view>
+              </swiper-item>
+            </block>
+          </swiper>
+
+          <view class='schedule-item'>
+            <view class='shedule-date'>
+              <view>
+                <image class="shedule-button-icon" mode="aspectFill" src="../../images/notice.png" /> 2018-10-10
+              </view>
+            </view>
+
+            <view class='schedule-item-content'>
+              <view>
+                <image class="shedule-button-icon" mode="aspectFill" src="../../images/location.png" /> 郑州
+              </view>
+              <view>
+                <image class="shedule-button-icon" mode="aspectFill" src="../../images/form.png" /> 品牌非公开活动
+              </view>
+              <view class="line">
+              </view>
+            </view>
+          </view>
+
+          <view style="background:#fff" bindtap='toDetail'>
+            <view class="item-ans">
+              <view class="avatar">
+                <image class="img" src="../../images/tmp.jpg"></image>
+              </view>
+              <view class="expertInfo">
+                <view class="name">欢颜</view>
+                <view class="tag">10-19 13:20 来自 微博客户端</view>
+              </view>
+            </view>
+
+            <view class='item-content'>
+              知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
+            </view>
+            
+            <view class='image'>
+              <block wx:for="{{[0,1,2,3,4,5,6,7,8]}}" wx:key="*this">
+                <image class="image-three" mode="aspectFill" src="../../images/tmp.jpg" />
+              </block>
+            </view>
+            <view class='image operation'>
+              <view>
+                <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+              </view>
+
+              <view>
+                <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+              </view>
+            </view>
+          </view>
+
+
+          <view style="background:#fff" bindtap='toDetail'>
+            <view class="item-ans">
+              <view class="avatar">
+                <image class="img" src="../../images/tmp.jpg"></image>
+              </view>
+              <view class="expertInfo">
+                <view class="name">欢颜</view>
+                <view class="tag">10-19 13:20 来自 微博客户端</view>
+              </view>
+            </view>
+
+            <view class='item-content'>
+              知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
+            </view>
+            <view>
+              <image class="image-one" mode="aspectFill" src="../../images/tmp.jpg"></image>
+            </view>
+
+            <view class='image operation'>
+              <view>
+                <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+              </view>
+
+              <view>
+                <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+              </view>
+            </view>
+          </view>
+
+
+
+
+          <view style="background:#fff" bindtap='toDetail'>
+            <view class="item-ans">
+              <view class="avatar">
+                <image class="img" src="../../images/tmp.jpg"></image>
+              </view>
+              <view class="expertInfo">
+                <view class="name">欢颜</view>
+                <view class="tag">10-19 13:20 来自 微博客户端</view>
+              </view>
+            </view>
+
+            <view class='item-content'>
+              知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
+            </view>
+
+            <view class='image'>
+              <image class="image-two" mode="aspectFill" src="../../images/tmp.jpg"></image>
+              <image class="image-two" mode="aspectFill" src="../../images/tmp.jpg"></image>
+            </view>
+
+            <view class='image operation'>
+              <view>
+                <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+              </view>
+
+              <view>
+                <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+              </view>
+            </view>
+          </view>
+
+
+
+        </scroll-view>
+      </swiper-item>
+      <!--微博-->
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+          <block wx:for="{{[1,2,3,4,5,6,7,8]}}" wx:key="*this">
+            <view style="background:#fff">
+              <view class="item-ans">
+                <view class="avatar">
+                  <image class="img" src="../../images/tmp.jpg"></image>
+                </view>
+                <view class="expertInfo">
+                  <view class="name">欢颜</view>
+                  <view class="tag">10-19 13:20 来自 微博客户端</view>
+                </view>
+              </view>
+
+              <view class='item-content'>
+                知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
+              </view>
+
+              <view class='image'>
+                <block wx:for="{{[0,1,2,3,4,5]}}" wx:key="*this">
+                  <image class="image-three" mode="aspectFill" src="../../images/tmp.jpg" />
+                </block>
+              </view>
+              <view class='image operation'>
+                <view>
+                  <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+                </view>
+
+                <view>
+                  <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </swiper-item>
+      <!--讨论-->
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+          <block wx:for="{{[1,2,3,4,5,6,7,8]}}" wx:key="*this">
+            <view style="background:#fff">
+              <view class="item-ans">
+                <view class="avatar">
+                  <image class="img" src="../../images/tmp.jpg"></image>
+                </view>
+                <view class="expertInfo">
+                  <view class="name">欢颜</view>
+                  <view class="tag">10-19 13:20 来自 微博客户端</view>
+                </view>
+              </view>
+
+              <view class='item-content'>
+                知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
+              </view>
+              <view>
+                <image class="image-one" mode="aspectFill" src="../../images/tmp.jpg"></image>
+              </view>
+              <view class='image'>
+                <image class="image-two" mode="aspectFill" src="../../images/tmp.jpg"></image>
+                <image class="image-two" mode="aspectFill" src="../../images/tmp.jpg"></image>
+              </view>
+              <view class='image'>
+                <block wx:for="{{[0,1,2]}}" wx:key="*this">
+                  <image class="image-three" mode="aspectFill" src="../../images/tmp.jpg" />
+                </block>
+              </view>
+              <view class='image operation'>
+                <view>
+                  <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+                </view>
+
+                <view>
+                  <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </swiper-item>
+      <!--签到-->
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+          <view style=" background:#fff;margin-bottom:20rpx;">
+            <view class="item-ans" style='height:200rpx;'>
+
+              <view class="expertInfo" style='margin-left:50rpx;'>
+                <view class="name ">您的排名：37</view>
+                <view class="tag ">连续签到76天</view>
+                <view class="tag ">累计签到120天</view>
+              </view>
+              <button class="sign-button">签到</button>
+            </view>
+          </view>
+
+          <block wx:for="{{[0,1,2,3,4,5,6,7,8,9,10]}}">
+            <view style=" background:#fff;margin-bottom:20rpx;">
+              <view class="item-ans ">
+                <view class="avatar ">
+                  <image class="img " src="../../images/tmp.jpg "></image>
+                </view>
+                <view class="expertInfo ">
+                  <view class="name ">欢颜</view>
+                  <view class="tag ">连续签到 100 天</view>
+                </view>
+                <view class="top-mark">Top {{index+1}}</view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+
+      </swiper-item>
+      <!--行程-->
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+
+          <block wx:for="{{[0,1,2,3,4,5]}}">
+            <view class='schedule-item'>
+              <view class='shedule-date'>
+                <view>
+                  <image class="shedule-button-icon" mode="aspectFill" src="../../images/notice.png" /> 2018-10-10
+                </view>
+              </view>
+              <view class='schedule-item-content'>
+                <view>
+                  <image class="shedule-button-icon" mode="aspectFill" src="../../images/location.png" /> 郑州
+                </view>
+                <view>
+                  <image class="shedule-button-icon" mode="aspectFill" src="../../images/form.png" /> 品牌非公开活动
+                </view>
+                <view class="line">
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </swiper-item>
+      <!--集合-->
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+
+          <view style=" background:#fff;margin-bottom:20rpx;">
+            <view class="item-ans" style='height:200rpx;'>
+
+              <view class="expertInfo" style='margin-left:50rpx;'>
+                <view class="name ">张艺兴粉丝集合啦</view>
+                <view class="tag ">加入QQ群或微信群，与志趣相投的朋友畅聊爱豆</view>
+              </view>
+            </view>
+          </view>
+
+
+          <view style=" background:#fff;margin-bottom:10rpx;">
+            <view class="item-ans">
+              <view style="width:400rpx;display: flex;">
+                <view style='width:180rpx;'>
+                  QQ群
+                </view>
+                <view>
+                  223232432432
+                </view>
+              </view>
+
+            </view>
+          </view>
+          <view style=" background:#fff;margin-bottom:10rpx;">
+            <view class="item-ans">
+              <view style="width:400rpx;display: flex;">
+                <view style='width:180rpx;'>
+                  微信群
+                </view>
+                <view>
+                  WECHAT_ID
+                </view>
+              </view>
+              <view>添加好友进群
+              </view>
+            </view>
+          </view>
+          <view style=" background:#fff;margin-bottom:10rpx;">
+            <view class="item-ans">
+              <view style="width:400rpx;display: flex;">
+                <view style='width:180rpx;'>
+                  公众号
+                </view>
+                <view>
+                  im_fc
+                </view>
+              </view>
+              <view>推荐爱豆信息
+              </view>
+            </view>
+          </view>
+
+
+        </scroll-view>
+
+      </swiper-item>
+      <!--活动-->
+      <swiper-item class="tobedone">
+        活动，敬请期待
+      </swiper-item>
+      <!--周边-->
+      <swiper-item class="tobedone">
+        周边，敬请期待
+      </swiper-item>
+
+    </swiper>
+  </view>
+</view>

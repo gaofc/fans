@@ -1,0 +1,122 @@
+<view class="page">
+
+  <view style="background:#fff">
+    <view class="item-ans">
+      <view class="avatar">
+        <image class="img" src="../../images/tmp.jpg"></image>
+      </view>
+      <view class="expertInfo">
+        <view class="name">欢颜</view>
+        <view class="tag">10-19 13:20 来自 微博客户端</view>
+      </view>
+    </view>
+
+    <view class='item-content'>
+      知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
+    </view>
+    <view>
+      <image style='width:100%' src="../../images/tmp.jpg"></image>
+    </view>
+
+    <view class='image operation'>
+      <view>
+        <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+      </view>
+      <view>
+        <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+      </view>
+    </view>
+
+
+    <view class='schedule-date'>
+      <view>
+        <image class="shedule-button-icon" mode="aspectFill" src="../../images/align_left.png" />评论 232
+      </view>
+      <view>
+        赞 3332
+      </view>
+    </view>
+
+    <view class='comment-item'>
+      <view>
+        <image class='comment-item-avtar' src='../../images/tmp.jpg'></image>
+      </view>
+      <view class='comment-item-content'>
+        <view class='comment-item-content-name'>我是张三</view>
+        <view>
+          这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论
+        </view>
+        <view class='comment-item-content-bottom'>
+          <view>10-21 10:21</view>
+          <view>
+            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+          </view>
+
+        </view>
+      </view>
+
+
+    </view>
+
+    <view class='comment-item'>
+      <view>
+        <image class='comment-item-avtar' src='../../images/tmp.jpg'></image>
+      </view>
+      <view class='comment-item-content'>
+        <view class='comment-item-content-name'>我是张三</view>
+        <view>
+          这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论
+        </view>
+        <view class='comment-item-content-bottom'>
+          <view>10-21 10:21</view>
+          <view>
+            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+          </view>
+
+        </view>
+      </view>
+
+
+    </view>
+
+    <view class='comment-item'>
+      <view>
+        <image class='comment-item-avtar' src='../../images/tmp.jpg'></image>
+      </view>
+      <view class='comment-item-content'>
+        <view class='comment-item-content-name'>我是张三</view>
+        <view>
+          这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论
+        </view>
+        <view class='comment-item-content-bottom'>
+          <view>10-21 10:21</view>
+          <view>
+            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+          </view>
+
+        </view>
+      </view>
+
+
+    </view>
+
+    <view class='comment-item'>
+      <view>
+        <image class='comment-item-avtar' src='../../images/tmp.jpg'></image>
+      </view>
+      <view class='comment-item-content'>
+        <view class='comment-item-content-name'>我是张三</view>
+        <view>
+          这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论
+        </view>
+        <view class='comment-item-content-bottom' style='margin-bottom:100rpx;'>
+          <view>10-21 10:21</view>
+          <view>
+            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+          </view>
+
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

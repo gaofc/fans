@@ -1,0 +1,4 @@
+/* miniprogram/pages/about/about.wxss */
+.box_desc {
+  margin-bottom: 50rpx;
+}

@@ -1,0 +1,50 @@
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+
+  <view class="page__bd">
+    <form bindsubmit="formSubmit">
+      <view class="weui-cells__title">您可以输入任何一个联系方式</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">qq</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name="qq" class="weui-input" placeholder="请输入qq" />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">微信</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name="wechat" class="weui-input" placeholder="请输入微信号" />
+          </view>
+        </view>
+
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">手机</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name="cellphone" class="weui-input" placeholder="请输入手机号" />
+          </view>
+        </view>
+
+      </view>
+
+      <view class="weui-cells__title">请输入想说的话</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <textarea name="content" class="weui-textarea" placeholder="请输入" style="height: 3.3em" />
+            <view class="weui-textarea-counter">0/200</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="weui-btn-area">
+        <button form-type="submit" class="weui-btn" type="primary">确定</button>
+      </view>
+    </form>
+  </view>
+</view>

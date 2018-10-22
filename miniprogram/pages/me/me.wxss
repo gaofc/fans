@@ -1,0 +1,43 @@
+.page {
+  background-color: #f8f8f8;
+  font-size: 16px;
+  color: #555;
+  height: 100%;
+}
+.container {
+  background-color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.userinfo-avatar {
+  width: 150rpx;
+  height: 150rpx;
+  margin: 50rpx;
+  border-radius: 50%;
+  background-size: cover;
+  background-color: white;
+}
+
+.item-ans {
+  width: 100%;
+  display: flex;
+  flex-grow: row no-wrap;
+  justify-content: space-between;
+  padding: 30rpx;
+  box-sizing: border-box;
+  height: 110rpx;
+  align-items: center;
+}
+
+.shedule-button-icon {
+  width: 45rpx;
+  height: 45rpx;
+  vertical-align: middle;
+}
