@@ -167,6 +167,21 @@
   border: 1px solid #4675f9;
   color: #4675f9;
 }
+.post-btn {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 60rpx;
+  border: 1px solid #4675f9;
+  color: #fff;
+  position: fixed;
+  right: 50rpx;
+  bottom: 100rpx;
+  z-index: 99;
+  background: #4675f9;
+}
 
 
 .scoll-h {

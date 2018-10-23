@@ -4,7 +4,7 @@
     <view class='tab-img-view'>
       <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
     </view>
-
+    <view wx:if="{{currentTab==2}}" class='post-btn'>发布</view>
 
     <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
       <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">推荐</view>
@@ -64,7 +64,7 @@
             <view class='item-content'>
               知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
             </view>
-            
+
             <view class='image'>
               <block wx:for="{{[0,1,2,3,4,5,6,7,8]}}" wx:key="*this">
                 <image class="image-three" mode="aspectFill" src="../../images/tmp.jpg" />
@@ -188,7 +188,9 @@
       </swiper-item>
       <!--讨论-->
       <swiper-item>
+
         <scroll-view scroll-y="true" class="scoll-h">
+
           <block wx:for="{{[1,2,3,4,5,6,7,8]}}" wx:key="*this">
             <view style="background:#fff">
               <view class="item-ans">
@@ -227,6 +229,8 @@
               </view>
             </view>
           </block>
+
+
         </scroll-view>
       </swiper-item>
       <!--签到-->
@@ -294,8 +298,8 @@
             <view class="item-ans" style='height:200rpx;'>
 
               <view class="expertInfo" style='margin-left:50rpx;'>
-                <view class="name ">张艺兴粉丝集合啦</view>
-                <view class="tag ">加入QQ群或微信群，与志趣相投的朋友畅聊爱豆</view>
+                <view class="name ">加入张艺兴粉丝QQ群或微信群</view>
+                <view class="tag ">与志趣相投的朋友畅聊爱豆</view>
               </view>
             </view>
           </view>
