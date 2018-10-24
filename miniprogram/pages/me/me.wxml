@@ -18,32 +18,50 @@
         1.0.0
       </view>
     </view>
-    <view class="item-ans">
+    <navigator class="item-ans">
       <view>
         <image class="shedule-button-icon" mode="aspectFill" src="../../images/address_book.png" /> 关于我们
       </view>
       <view>
         <image class="shedule-button-icon" mode="aspectFill" src="../../images/right.png" />
       </view>
-    </view>
-    <view class="item-ans">
+    </navigator>
+    <navigator class="item-ans">
       <view>
         <image class="shedule-button-icon" mode="aspectFill" src="../../images/friend_favor.png" /> 我的爱豆
       </view>
       <view>
         <image class="shedule-button-icon" mode="aspectFill" src="../../images/right.png" />
       </view>
-    </view>
+    </navigator>
   </view>
   <view style=" background:#fff;margin-bottom:10rpx;">
-    <view class="item-ans">
+    <navigator class="item-ans">
+      <view>
+        <image class="shedule-button-icon" mode="aspectFill" src="../../images/address_book.png" /> 我的讨论
+      </view>
+      <view>
+        <image class="shedule-button-icon" mode="aspectFill" src="../../images/right.png" />
+      </view>
+    </navigator>
+    <navigator class="item-ans">
+      <view>
+        <image class="shedule-button-icon" mode="aspectFill" src="../../images/friend_favor.png" /> 我的消息
+      </view>
+      <view>
+        <image class="shedule-button-icon" mode="aspectFill" src="../../images/right.png" />
+      </view>
+    </navigator>
+  </view>
+  <view style=" background:#fff;margin-bottom:10rpx;">
+    <navigator class="item-ans">
       <view>
         <image class="shedule-button-icon" mode="aspectFill" src="../../images/post.png" /> 意见反馈
       </view>
       <view>
         <image class="shedule-button-icon" mode="aspectFill" src="../../images/right.png" />
       </view>
-    </view>
+    </navigator>
     <view class="item-ans">
       <view>
         <image class="shedule-button-icon" mode="aspectFill" src="../../images/service.png" /> 联系客服

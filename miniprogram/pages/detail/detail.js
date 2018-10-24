@@ -5,7 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    ifShowComment:false
+  },
+  onShowComment: function(e) {
+    this.setData({
+      ifShowComment: true
+    })
+  },
+  onHideComment: function(e) {
+    this.setData({
+      ifShowComment: false
+    })
   },
 
   /**

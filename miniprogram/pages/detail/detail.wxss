@@ -162,22 +162,18 @@
   height: 30rpx;
   vertical-align: middle;
 }
-.edit-comment {
-  display: flex;
-  width: 100%;
-  background-color: #fff;
-  font-size: 16px;
-  position: fixed;
-  bottom: 400;
-  left: 0;
-  z-index: 99;
-  justify-content: space-between;
-}
 
-.edit {
-  margin: 30rpx;
-  font-size: 16px;
-  width: 400rpx;
+.edit-comment {
+  position: fixed;
+  bottom: 400rpx;
+  width: 100%;
+  display: flex;
+  flex-grow: row no-wrap;
+  justify-content: space-between;
+  padding: 30rpx;
+  box-sizing: border-box;
+  align-items: center;
+  font-size: 14px;
   background-color: #fff;
 }
 

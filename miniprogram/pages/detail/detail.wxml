@@ -19,7 +19,7 @@
     </view>
 
     <view class='image operation'>
-      <view>
+      <view bindtap='onShowComment'>
         <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
       </view>
       <view>
@@ -120,11 +120,12 @@
     </view>
 
 
-    <view class='edit-comment'>
-    <textarea auto-height auto-focus cursor-spacing="20" placeholder="输入评论" class="text" />
-    <button class='comment-button'>评论</button>
-    
+    <view wx:if="{{ifShowComment}}" class='edit-comment' >
+      <textarea auto-height auto-focus cursor-spacing="20" placeholder="输入评论" class="text" bindblur="onHideComment"/>
+      <button class='comment-button'>评论</button>
+
     </view>
+    <view style="margin-bottom:100rpx;">.</view>
 
 
 
