@@ -16,8 +16,15 @@ Page({
     vertical: false,
     autoplay: false,
     interval: 2000,
-    duration: 500
+    duration: 500,
+    showSelect: false
   },
+  selectStar: function(e) {
+    this.setData({
+      showSelect: !this.data.showSelect
+    })
+  },
+
   toDetail: function(e) {
     wx.navigateTo({
       url: '../detail/detail',

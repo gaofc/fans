@@ -162,3 +162,32 @@
   height: 30rpx;
   vertical-align: middle;
 }
+.edit-comment {
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+  font-size: 16px;
+  position: fixed;
+  bottom: 400;
+  left: 0;
+  z-index: 99;
+  justify-content: space-between;
+}
+
+.edit {
+  margin: 30rpx;
+  font-size: 16px;
+  width: 400rpx;
+  background-color: #fff;
+}
+
+.comment-button {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 60rpx;
+  border: 1px solid #4675f9;
+  color: #4675f9;
+}

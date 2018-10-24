@@ -19,6 +19,30 @@
   z-index: 99;
   margin-left: 80rpx;
 }
+
+.star-select-tab {
+  margin-top: 80rpx;
+  height: 150rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #fff;
+  font-size: 16px;
+  white-space: nowrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+.star {
+  margin: 20rpx;
+  font-size: 14px;
+  color: #b0b0b0;
+  text-align: center;
+  display: inline-block;
+}
+
 .tab-img-view {
   background-color: #fff;
   z-index: 99;
@@ -183,7 +207,6 @@
   background: #4675f9;
 }
 
-
 .scoll-h {
   height: 100%;
 }
@@ -240,12 +263,11 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  background-color: #1AAD19;
+  background-color: #FFFFFF;
   color: #FFFFFF;
   font-size: 36rpx;
 }
 .demo-text-1:before{
-  content: 'xxxxxxxxxxxx';
   position: absolute;
   top: 80%;
   left: 50%;
@@ -255,12 +277,11 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  background-color: #2782D7;
+  background-color: #FFFFFF;
   color: #FFFFFF;
   font-size: 36rpx;
 }
 .demo-text-2:before{
-  content: 'B';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -270,12 +291,11 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  background-color: #F1F1F1;
-  color: #353535;
+  background-color: #FFFFFF;
+  color: #FFFFFF;
   font-size: 36rpx;
 }
 .demo-text-3:before{
-  content: 'C';
   position: absolute;
   top: 50%;
   left: 50%;

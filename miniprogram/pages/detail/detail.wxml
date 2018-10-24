@@ -118,5 +118,15 @@
         </view>
       </view>
     </view>
+
+
+    <view class='edit-comment'>
+    <textarea auto-height auto-focus cursor-spacing="20" placeholder="输入评论" class="text" />
+    <button class='comment-button'>评论</button>
+    
+    </view>
+
+
+
   </view>
 </view>

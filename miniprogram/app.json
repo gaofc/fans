@@ -6,7 +6,8 @@
     "pages/about/about",
     "pages/suggest/suggest",
     "pages/schedule/schedule",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/post/post"
   ],
   "window": {
     "backgroundColor": "#f8f8f8",

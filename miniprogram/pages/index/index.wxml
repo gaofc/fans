@@ -1,10 +1,66 @@
 <view class="page">
 
   <view>
-    <view class='tab-img-view'>
+    <view class='tab-img-view' bindtap='selectStar'>
       <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
     </view>
-    <view wx:if="{{currentTab==2}}" class='post-btn'>发布</view>
+    <navigator url="../post/post" wx:if="{{currentTab==2}}" class='post-btn'>发布</navigator>
+    <scroll-view scroll-x="true" wx:if="{{showSelect}}" class='star-select-tab' scroll-left='0'>
+      <view class='star'>
+        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <view>
+          张艺兴
+        </view>
+      </view>
+      <view class='star'>
+        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <view>
+          张艺兴艺兴艺兴
+        </view>
+      </view>
+      <view class='star'>
+        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <view>
+          张艺兴
+        </view>
+      </view>
+      <view class='star'>
+        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <view>
+          张艺兴
+        </view>
+      </view>
+      <view class='star'>
+        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <view>
+          张艺兴
+        </view>
+      </view>
+      <view class='star'>
+        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <view>
+          张艺兴
+        </view>
+      </view>
+      <view class='star'>
+        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <view>
+          张艺兴
+        </view>
+      </view>
+      <view class='star'>
+        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <view>
+          张艺兴
+        </view>
+      </view>
+      <view class='star'>
+        <image class="tab-img" src="../../images/round_add_fill.png"></image>
+        <view>
+          添加
+        </view>
+      </view>
+    </scroll-view>
 
     <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
       <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">推荐</view>
