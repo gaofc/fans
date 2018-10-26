@@ -81,7 +81,6 @@
               <swiper-item>
                 <view class="swiper-item {{item}}">
                   <image style='width:100%;' src='../../images/tmp.jpg'></image>
-
                 </view>
               </swiper-item>
             </block>
@@ -106,136 +105,118 @@
             </view>
           </view>
 
-          <view style="background:#fff" bindtap='toDetail'>
-            <view class="item-ans">
-              <view class="avatar">
-                <image class="img" src="../../images/tmp.jpg"></image>
-              </view>
-              <view class="expertInfo">
-                <view class="name">欢颜</view>
-                <view class="tag">10-19 13:20 来自 微博客户端</view>
-              </view>
-            </view>
 
-            <view class='item-content'>
-              知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
-            </view>
-
-            <view class='image'>
-              <block wx:for="{{[0,1,2,3,4,5,6,7,8]}}" wx:key="*this">
-                <image class="image-three" mode="aspectFill" src="../../images/tmp.jpg" />
-              </block>
-            </view>
-            <view class='image operation'>
-              <view>
-                <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+          <block wx:for="{{tweets}}">
+            <view style="background:#fff;" bindtap='toDetail'>
+              <view class="item-ans">
+                <view class="avatar">
+                  <image class="img" src="{{item.profile_image_url}}"></image>
+                </view>
+                <view class="expertInfo">
+                  <view class="name">{{item.screen_name}}</view>
+                  <view class="tag">{{item.created_at}}</view>
+                </view>
               </view>
 
-              <view>
-                <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
-              </view>
-            </view>
-          </view>
-
-
-          <view style="background:#fff" bindtap='toDetail'>
-            <view class="item-ans">
-              <view class="avatar">
-                <image class="img" src="../../images/tmp.jpg"></image>
-              </view>
-              <view class="expertInfo">
-                <view class="name">欢颜</view>
-                <view class="tag">10-19 13:20 来自 微博客户端</view>
-              </view>
-            </view>
-
-            <view class='item-content'>
-              知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
-            </view>
-            <view>
-              <image class="image-one" mode="aspectFill" src="../../images/tmp.jpg"></image>
-            </view>
-
-            <view class='image operation'>
-              <view>
-                <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+              <view class='item-content'>
+                <rich-text nodes="{{item.text}}"></rich-text>
               </view>
 
-              <view>
-                <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
-              </view>
-            </view>
-          </view>
-
-
-
-
-          <view style="background:#fff" bindtap='toDetail'>
-            <view class="item-ans">
-              <view class="avatar">
-                <image class="img" src="../../images/tmp.jpg"></image>
-              </view>
-              <view class="expertInfo">
-                <view class="name">欢颜</view>
-                <view class="tag">10-19 13:20 来自 微博客户端</view>
-              </view>
-            </view>
-
-            <view class='item-content'>
-              知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
-            </view>
-
-            <view class='image'>
-              <image class="image-two" mode="aspectFill" src="../../images/tmp.jpg"></image>
-              <image class="image-two" mode="aspectFill" src="../../images/tmp.jpg"></image>
-            </view>
-
-            <view class='image operation'>
-              <view>
-                <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+              <view wx-if="{{item.retweet != undefined}}" class='item-content' style="background-color:#f8f8f8;padding-top:10rpx;">
+                <rich-text nodes="<span style='color:#5073A0;'>@{{item.retweet.name}}</span>{{item.retweet.text}}"></rich-text>
               </view>
 
-              <view>
-                <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+
+              <view wx-if="{{item.page_pics != undefined && item.page_pics.length == 1}}" class='image'>
+                <image class="image-one" mode="aspectFill" src="{{item.page_pics[0]}}"></image>
+              </view>
+
+              <view wx-if="{{item.page_pics != undefined && (item.page_pics.length == 2 || item.page_pics.length == 4)}}" class='image'>
+                <block wx:for="{{item.page_pics}}">
+                  <image class="image-two" mode="aspectFill" src="{{item}}" />
+                </block>
+              </view>
+
+              <view wx-if="{{item.page_pics != undefined && item.page_pics.length > 2 &&  item.page_pics.length != 4}}" class='image'>
+                <block wx:for="{{item.page_pics}}">
+                  <image class="image-three" mode="aspectFill" src="{{item}}" />
+                </block>
+              </view>
+
+              <view wx-if="{{item.media_info != undefined}}" style="position:relative;">
+                <view style="position:absolute;left:315rpx;top:180rpx;">
+                  <image style="width:120rpx;height:120rpx;opacity:0.7;" mode="aspectFill " src="../../images/play.png " />
+                </view>
+
+                <image class="video " mode="aspectFill " src="{{item.media_info.page_pic}} "></image>
+              </view>
+
+
+              <view class='image operation'>
+                <view>
+                  <image class="button-icon " mode="aspectFill " src="../../images/comment_light.png " /> 0
+                </view>
+
+                <view>
+                  <image class="button-icon " mode="aspectFill " src="../../images/appreciate_light.png " /> 0
+                </view>
               </view>
             </view>
-          </view>
-
-
+          </block>
 
         </scroll-view>
       </swiper-item>
       <!--微博-->
       <swiper-item>
-        <scroll-view scroll-y="true" class="scoll-h">
-          <block wx:for="{{[1,2,3,4,5,6,7,8]}}" wx:key="*this">
-            <view style="background:#fff">
+        <scroll-view scroll-y="true " class="scoll-h ">
+          <block wx:for="{{tweets}}">
+            <view style="background:#fff;" bindtap='toDetail'>
               <view class="item-ans">
                 <view class="avatar">
-                  <image class="img" src="../../images/tmp.jpg"></image>
+                  <image class="img" src="{{item.profile_image_url}}"></image>
                 </view>
                 <view class="expertInfo">
-                  <view class="name">欢颜</view>
-                  <view class="tag">10-19 13:20 来自 微博客户端</view>
+                  <view class="name">{{item.screen_name}}</view>
+                  <view class="tag">{{item.created_at}}</view>
                 </view>
               </view>
 
               <view class='item-content'>
-                知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
+                <rich-text nodes="{{item.text}}"></rich-text>
               </view>
 
-              <view class='image'>
-                <block wx:for="{{[0,1,2,3,4,5]}}" wx:key="*this">
-                  <image class="image-three" mode="aspectFill" src="../../images/tmp.jpg" />
+              <view wx-if="{{item.page_pics != undefined && item.page_pics.length == 1}}" class='image'>
+                <image class="image-one" mode="aspectFill" src="{{item.page_pics[0]}}"></image>
+              </view>
+
+              <view wx-if="{{item.page_pics != undefined && (item.page_pics.length == 2 || item.page_pics.length == 4)}}" class='image'>
+                <block wx:for="{{item.page_pics}}">
+                  <image class="image-two" mode="aspectFill" src="{{item}}" />
                 </block>
               </view>
+
+              <view wx-if="{{item.page_pics != undefined && item.page_pics.length > 2 &&  item.page_pics.length != 4}}" class='image'>
+                <block wx:for="{{item.page_pics}}">
+                  <image class="image-three" mode="aspectFill" src="{{item}}" />
+                </block>
+              </view>
+
+              <view wx-if="{{item.media_info != undefined}}" style="position:relative;">
+                <view style="position:absolute;left:315rpx;top:180rpx;">
+                  <image style="width:120rpx;height:120rpx;opacity:0.7;" mode="aspectFill " src="../../images/play.png " />
+                </view>
+
+                <image class="video " mode="aspectFill " src="{{item.media_info.page_pic}} "></image>
+              </view>
+
+
               <view class='image operation'>
                 <view>
-                  <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+                  <image class="button-icon " mode="aspectFill " src="../../images/comment_light.png " /> 0
                 </view>
 
                 <view>
-                  <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+                  <image class="button-icon " mode="aspectFill " src="../../images/appreciate_light.png " /> 0
                 </view>
               </view>
             </view>
@@ -245,17 +226,17 @@
       <!--讨论-->
       <swiper-item>
 
-        <scroll-view scroll-y="true" class="scoll-h">
+        <scroll-view scroll-y="true " class="scoll-h ">
 
-          <block wx:for="{{[1,2,3,4,5,6,7,8]}}" wx:key="*this">
-            <view style="background:#fff">
-              <view class="item-ans">
-                <view class="avatar">
-                  <image class="img" src="../../images/tmp.jpg"></image>
+          <block wx:for="{{[1,2,3,4,5,6,7,8]}} " wx:key="*this ">
+            <view style="background:#fff ">
+              <view class="item-ans ">
+                <view class="avatar ">
+                  <image class="img " src="../../images/tmp.jpg "></image>
                 </view>
-                <view class="expertInfo">
-                  <view class="name">欢颜</view>
-                  <view class="tag">10-19 13:20 来自 微博客户端</view>
+                <view class="expertInfo ">
+                  <view class="name ">欢颜</view>
+                  <view class="tag ">10-19 13:20 来自 微博客户端</view>
                 </view>
               </view>
 
@@ -263,24 +244,24 @@
                 知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
               </view>
               <view>
-                <image class="image-one" mode="aspectFill" src="../../images/tmp.jpg"></image>
+                <image class="image-one " mode="aspectFill " src="../../images/tmp.jpg "></image>
               </view>
               <view class='image'>
-                <image class="image-two" mode="aspectFill" src="../../images/tmp.jpg"></image>
-                <image class="image-two" mode="aspectFill" src="../../images/tmp.jpg"></image>
+                <image class="image-two " mode="aspectFill " src="../../images/tmp.jpg "></image>
+                <image class="image-two " mode="aspectFill " src="../../images/tmp.jpg "></image>
               </view>
               <view class='image'>
-                <block wx:for="{{[0,1,2]}}" wx:key="*this">
-                  <image class="image-three" mode="aspectFill" src="../../images/tmp.jpg" />
+                <block wx:for="{{[0,1,2]}} " wx:key="*this ">
+                  <image class="image-three " mode="aspectFill " src="../../images/tmp.jpg " />
                 </block>
               </view>
               <view class='image operation'>
                 <view>
-                  <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+                  <image class="button-icon " mode="aspectFill " src="../../images/comment_light.png " /> 221
                 </view>
 
                 <view>
-                  <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+                  <image class="button-icon " mode="aspectFill " src="../../images/appreciate_light.png " /> 1020
                 </view>
               </view>
             </view>
@@ -291,21 +272,21 @@
       </swiper-item>
       <!--签到-->
       <swiper-item>
-        <scroll-view scroll-y="true" class="scoll-h">
-          <view style=" background:#fff;margin-bottom:20rpx;">
-            <view class="item-ans" style='height:200rpx;'>
+        <scroll-view scroll-y="true " class="scoll-h ">
+          <view style=" background:#fff;margin-bottom:20rpx; ">
+            <view class="item-ans " style='height:200rpx;'>
 
-              <view class="expertInfo" style='margin-left:50rpx;'>
+              <view class="expertInfo " style='margin-left:50rpx;'>
                 <view class="name ">您的排名：37</view>
                 <view class="tag ">连续签到76天</view>
                 <view class="tag ">累计签到120天</view>
               </view>
-              <button class="sign-button">签到</button>
+              <button class="sign-button ">签到</button>
             </view>
           </view>
 
-          <block wx:for="{{[0,1,2,3,4,5,6,7,8,9,10]}}">
-            <view style=" background:#fff;margin-bottom:20rpx;">
+          <block wx:for="{{[0,1,2,3,4,5,6,7,8,9,10]}} ">
+            <view style=" background:#fff;margin-bottom:20rpx; ">
               <view class="item-ans ">
                 <view class="avatar ">
                   <image class="img " src="../../images/tmp.jpg "></image>
@@ -314,7 +295,7 @@
                   <view class="name ">欢颜</view>
                   <view class="tag ">连续签到 100 天</view>
                 </view>
-                <view class="top-mark">Top {{index+1}}</view>
+                <view class="top-mark ">Top {{index+1}}</view>
               </view>
             </view>
           </block>
@@ -323,23 +304,23 @@
       </swiper-item>
       <!--行程-->
       <swiper-item>
-        <scroll-view scroll-y="true" class="scoll-h">
+        <scroll-view scroll-y="true " class="scoll-h ">
 
-          <block wx:for="{{[0,1,2,3,4,5]}}">
+          <block wx:for="{{[0,1,2,3,4,5]}} ">
             <view class='schedule-item'>
               <view class='shedule-date'>
                 <view>
-                  <image class="shedule-button-icon" mode="aspectFill" src="../../images/notice.png" /> 2018-10-10
+                  <image class="shedule-button-icon " mode="aspectFill " src="../../images/notice.png " /> 2018-10-10
                 </view>
               </view>
               <view class='schedule-item-content'>
                 <view>
-                  <image class="shedule-button-icon" mode="aspectFill" src="../../images/location.png" /> 郑州
+                  <image class="shedule-button-icon " mode="aspectFill " src="../../images/location.png " /> 郑州
                 </view>
                 <view>
-                  <image class="shedule-button-icon" mode="aspectFill" src="../../images/form.png" /> 品牌非公开活动
+                  <image class="shedule-button-icon " mode="aspectFill " src="../../images/form.png " /> 品牌非公开活动
                 </view>
-                <view class="line">
+                <view class="line ">
                 </view>
               </view>
             </view>
@@ -348,12 +329,12 @@
       </swiper-item>
       <!--集合-->
       <swiper-item>
-        <scroll-view scroll-y="true" class="scoll-h">
+        <scroll-view scroll-y="true " class="scoll-h ">
 
-          <view style=" background:#fff;margin-bottom:20rpx;">
-            <view class="item-ans" style='height:200rpx;'>
+          <view style=" background:#fff;margin-bottom:20rpx; ">
+            <view class="item-ans " style='height:200rpx;'>
 
-              <view class="expertInfo" style='margin-left:50rpx;'>
+              <view class="expertInfo " style='margin-left:50rpx;'>
                 <view class="name ">加入张艺兴粉丝QQ群或微信群</view>
                 <view class="tag ">与志趣相投的朋友畅聊爱豆</view>
               </view>
@@ -361,9 +342,9 @@
           </view>
 
 
-          <view style=" background:#fff;margin-bottom:10rpx;">
-            <view class="item-ans">
-              <view style="width:400rpx;display: flex;">
+          <view style=" background:#fff;margin-bottom:10rpx; ">
+            <view class="item-ans ">
+              <view style="width:400rpx;display: flex; ">
                 <view style='width:180rpx;'>
                   QQ群
                 </view>
@@ -374,9 +355,9 @@
 
             </view>
           </view>
-          <view style=" background:#fff;margin-bottom:10rpx;">
-            <view class="item-ans">
-              <view style="width:400rpx;display: flex;">
+          <view style=" background:#fff;margin-bottom:10rpx; ">
+            <view class="item-ans ">
+              <view style="width:400rpx;display: flex; ">
                 <view style='width:180rpx;'>
                   微信群
                 </view>
@@ -388,9 +369,9 @@
               </view>
             </view>
           </view>
-          <view style=" background:#fff;margin-bottom:10rpx;">
-            <view class="item-ans">
-              <view style="width:400rpx;display: flex;">
+          <view style=" background:#fff;margin-bottom:10rpx; ">
+            <view class="item-ans ">
+              <view style="width:400rpx;display: flex; ">
                 <view style='width:180rpx;'>
                   公众号
                 </view>
@@ -408,11 +389,11 @@
 
       </swiper-item>
       <!--活动-->
-      <swiper-item class="tobedone">
+      <swiper-item class="tobedone ">
         活动，敬请期待
       </swiper-item>
       <!--周边-->
-      <swiper-item class="tobedone">
+      <swiper-item class="tobedone ">
         周边，敬请期待
       </swiper-item>
 

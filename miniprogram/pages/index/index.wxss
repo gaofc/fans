@@ -122,6 +122,10 @@
   flex-wrap: wrap;
 }
 
+.video {
+  width: 100%;
+}
+
 .operation {
   width: 100%;
   display: flex;

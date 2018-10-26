@@ -11,14 +11,43 @@ Page({
       answer: 134,
       listen: 2234
     }],
+    tweets: [],
     background: ['demo-text-1', 'demo-text-2', 'demo-text-3'],
     indicatorDots: true,
     vertical: false,
     autoplay: false,
     interval: 2000,
     duration: 500,
-    showSelect: false
+    showSelect: false,
+    page:1
+
   },
+  onReachBottom: function(e) {
+    var pa = this.data.page + 1
+    var that = this
+    wx.cloud.callFunction({
+      name: 'getWeiboList',
+      data: {page: pa},
+      success: res => {
+        console.log('getWeiboList suc', res)
+        var tw = that.data.tweets.cont
+
+        that.setData({
+          tweets: res.result.tweets
+        });
+      },
+      fail: err => {
+        console.error('getWeiboList failed', err)
+      },
+      complete: res => {
+      }
+    })
+
+    this.setData({
+      page: pa
+    })
+  },
+
   selectStar: function(e) {
     this.setData({
       showSelect: !this.data.showSelect
@@ -76,6 +105,20 @@ Page({
         });
       }
     });
-  },
-  footerTap: app.footerTap
+    wx.cloud.callFunction({
+      name: 'getWeiboList',
+      data: {},
+      success: res => {
+        console.log('getWeiboList suc', res)
+        that.setData({
+          tweets: res.result.tweets
+        });
+      },
+      fail: err => {
+        console.error('getWeiboList failed', err)
+      },
+      complete: res => {
+      }
+    })
+  }
 })

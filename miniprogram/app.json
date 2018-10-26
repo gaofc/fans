@@ -14,7 +14,9 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#f8f8f8",
     "navigationBarTitleText": "我的爱豆",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": true
   },
   "tabBar": {
     "list": [
