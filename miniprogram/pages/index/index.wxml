@@ -2,54 +2,54 @@
 
   <view>
     <view class='tab-img-view' bindtap='selectStar'>
-      <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+      <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
     </view>
     <navigator url="../post/post" wx:if="{{currentTab==2}}" class='post-btn'>发布</navigator>
     <scroll-view scroll-x="true" wx:if="{{showSelect}}" class='star-select-tab' scroll-left='0'>
       <view class='star'>
-        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
         <view>
           张艺兴
         </view>
       </view>
       <view class='star'>
-        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
         <view>
           张艺兴艺兴艺兴
         </view>
       </view>
       <view class='star'>
-        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
         <view>
           张艺兴
         </view>
       </view>
       <view class='star'>
-        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
         <view>
           张艺兴
         </view>
       </view>
       <view class='star'>
-        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
         <view>
           张艺兴
         </view>
       </view>
       <view class='star'>
-        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
         <view>
           张艺兴
         </view>
       </view>
       <view class='star'>
-        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
         <view>
           张艺兴
         </view>
       </view>
       <view class='star'>
-        <image class="tab-img" src="../../images/zhangyixing.jpg"></image>
+        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
         <view>
           张艺兴
         </view>

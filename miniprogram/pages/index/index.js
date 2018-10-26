@@ -30,10 +30,10 @@ Page({
       data: {page: pa},
       success: res => {
         console.log('getWeiboList suc', res)
-        var tw = that.data.tweets.cont
+        var tw = that.data.tweets.concat(res.result.tweets)
 
         that.setData({
-          tweets: res.result.tweets
+          tweets: tw
         });
       },
       fail: err => {
@@ -107,7 +107,7 @@ Page({
     });
     wx.cloud.callFunction({
       name: 'getWeiboList',
-      data: {},
+      data: { page: that.data.page },
       success: res => {
         console.log('getWeiboList suc', res)
         that.setData({

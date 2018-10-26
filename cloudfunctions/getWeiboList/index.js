@@ -76,7 +76,15 @@ function parseJson(jsonStr) {
 
 
 exports.main = async (event, context) => {
-  var page = 2
+  let {
+    userInfo,
+    page
+  } = event
+  let {
+    openId,
+    appId
+  } = userInfo
+
   var url = `https://m.weibo.cn/api/container/getIndex?uid=2706896955&luicode=10000011&lfid=100103type%3D1%26q%3D%E5%BC%A0%E8%89%BA%E5%85%B4&featurecode=20000320&type=uid&value=2706896955&containerid=1076032706896955&page=${page}`
 
 
