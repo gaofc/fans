@@ -165,7 +165,7 @@
 
 .edit-comment {
   position: fixed;
-  bottom: 400rpx;
+  bottom: 450rpx;
   width: 100%;
   display: flex;
   flex-grow: row no-wrap;
@@ -186,4 +186,7 @@
   border-radius: 60rpx;
   border: 1px solid #4675f9;
   color: #4675f9;
+}
+.video {
+  width: 100%;
 }

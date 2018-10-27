@@ -16,9 +16,9 @@ function parseJson(jsonStr) {
       tweet.created_at = mblog.created_at
       tweet.screen_name = mblog.user.screen_name
       tweet.profile_image_url = mblog.user.profile_image_url
-      tweet.id = mblog.user.id
+      tweet.id = mblog.id
       var text = mblog.text
-      text = text.replace(/<img.*?>/g, '')
+      text = text.replace(/<img.*?>/g, '').replace("全文", "<span style='color: #5073A0;'>全文</span>")
       tweet.text = text
       var page_info = mblog.page_info
       if (page_info != undefined) {
@@ -44,7 +44,8 @@ function parseJson(jsonStr) {
       if (retweeted_status != undefined) {
         retweet = {}
         retweet.name = retweeted_status.user.screen_name
-        retweet.text = retweeted_status.text.replace(/<img.*?>/g, '')
+        retweet.id = retweeted_status.id
+        retweet.text = retweeted_status.text.replace(/<img.*?>/g, '').replace("全文", "<span style='color: #5073A0;'>全文</span>")
         var page_info = retweeted_status.page_info
         if (page_info != undefined) {
           if (page_info.media_info != undefined) {
@@ -76,7 +77,16 @@ function parseJson(jsonStr) {
 
 
 exports.main = async (event, context) => {
-  var page = 2
+  let {
+    userInfo,
+    page
+  } = event
+  let {
+    openId,
+    appId
+  } = userInfo
+
+  page = page == undefined ? 1 : page
   var url = `https://m.weibo.cn/api/container/getIndex?uid=2706896955&luicode=10000011&lfid=100103type%3D1%26q%3D%E5%BC%A0%E8%89%BA%E5%85%B4&featurecode=20000320&type=uid&value=2706896955&containerid=1076032706896955&page=${page}`
 
 

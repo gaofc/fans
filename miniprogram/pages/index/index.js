@@ -19,21 +19,20 @@ Page({
     interval: 2000,
     duration: 500,
     showSelect: false,
-    page:1
-
+    page:1,
+    schedules:[]
   },
-  onReachBottom: function(e) {
-    var pa = this.data.page + 1
+
+  onPullDownRefresh :function(e) {
     var that = this
     wx.cloud.callFunction({
       name: 'getWeiboList',
-      data: {page: pa},
+      data: { page: 1 },
       success: res => {
         console.log('getWeiboList suc', res)
-        var tw = that.data.tweets.cont
-
         that.setData({
-          tweets: res.result.tweets
+          tweets: res.result.tweets,
+          page: 1
         });
       },
       fail: err => {
@@ -41,10 +40,6 @@ Page({
       },
       complete: res => {
       }
-    })
-
-    this.setData({
-      page: pa
     })
   },
 
@@ -55,8 +50,10 @@ Page({
   },
 
   toDetail: function(e) {
+    console.log(e)
+    var agr = encodeURIComponent(JSON.stringify(e.currentTarget.dataset.item) )
     wx.navigateTo({
-      url: '../detail/detail',
+      url: '../detail/detail?item=' + agr,
     })
   },
 
@@ -105,20 +102,50 @@ Page({
         });
       }
     });
+
     wx.cloud.callFunction({
-      name: 'getWeiboList',
-      data: {},
+      name: 'getSchedule',
+      data: { star_id: '' },
       success: res => {
-        console.log('getWeiboList suc', res)
+        console.log('getSchedule suc', res)
+        var sch = res.result.schedules
+        console.log(sch)
         that.setData({
-          tweets: res.result.tweets
+          schedules: sch
         });
       },
       fail: err => {
-        console.error('getWeiboList failed', err)
+        console.error('getSchedule failed', err)
       },
       complete: res => {
       }
     })
+
+    this._observer = wx.createIntersectionObserver(this)
+    this._observer
+      .relativeTo('#weibo')
+      .observe('.loading-more', (res) => {
+        console.log(res)
+        if (res.intersectionRatio > 0) {
+          wx.cloud.callFunction({
+            name: 'getWeiboList',
+            data: { page: that.data.page },
+            success: res => {
+              console.log('getWeiboList suc', res)
+              var tw = that.data.tweets.concat(res.result.tweets)
+              that.setData({
+                tweets: tw,
+                page: that.data.page+1
+              });
+            },
+            fail: err => {
+              console.error('getWeiboList failed', err)
+            },
+            complete: res => {
+            }
+          })
+        }
+      });
   }
 })
+

@@ -3,20 +3,65 @@
   <view style="background:#fff">
     <view class="item-ans">
       <view class="avatar">
-        <image class="img" src="../../images/tmp.jpg"></image>
+        <image class="img" src="{{data.profile_image_url}}"></image>
       </view>
       <view class="expertInfo">
-        <view class="name">欢颜</view>
-        <view class="tag">10-19 13:20 来自 微博客户端</view>
+        <view class="name">{{data.screen_name}}</view>
+        <view class="tag">{{data.created_at}}</view>
       </view>
     </view>
 
     <view class='item-content'>
-      知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
+      <rich-text nodes="{{data.text}}"></rich-text>
     </view>
-    <view>
-      <image style='width:100%' src="../../images/tmp.jpg"></image>
+
+    <view wx-if="{{data.page_pics != undefined && data.page_pics.length == 1}}" class='image'>
+      <image class="image-one" mode="aspectFill" src="{{data.page_pics[0]}}"></image>
     </view>
+
+    <view wx-if="{{data.page_pics != undefined && (data.page_pics.length == 2 || data.page_pics.length == 4)}}" class='image'>
+      <block wx:for="{{data.page_pics}}">
+        <image class="image-two" mode="aspectFill" src="{{item}}" />
+      </block>
+    </view>
+
+    <view wx-if="{{data.page_pics != undefined && data.page_pics.length > 2 &&  data.page_pics.length != 4}}" class='image'>
+      <block wx:for="{{data.page_pics}}">
+        <image class="image-three" mode="aspectFill" src="{{item}}" />
+      </block>
+    </view>
+
+    <view wx-if="{{data.media_info != undefined}}" style="position:relative;">
+      <video class="video" src="{{data.media_info.stream_url}}"></video>
+    </view>
+
+
+
+
+    <!--retweet -->
+    <block wx-if="{{data.retweet != undefined}}">
+      <view wx-if="{{data.retweet !=undefined}}" class='item-content' style="background-color:#f8f8f8;padding-top:10rpx; ">
+        <rich-text nodes="<span style='color:#5073A0;'>@{{data.retweet.name}} </span>{{data.retweet.text}}"></rich-text>
+      </view>
+      <view wx-if="{{data.retweet.page_pics != undefined && data.retweet.page_pics.length == 1}}" class='image'>
+        <image class="image-one" mode="aspectFill" src="{{data.retweet.page_pics[0]}}"></image>
+      </view>
+      <view wx-if="{{data.retweet.page_pics != undefined && (data.retweet.page_pics.length == 2 || item.retweet.page_pics.length == 4)}}" class='image'>
+        <block wx:for="{{data.retweet.page_pics}}">
+          <image class="image-two" mode="aspectFill" src="{{item}}" />
+        </block>
+      </view>
+      <view wx-if="{{data.retweet.page_pics != undefined && data.retweet.page_pics.length > 2 &&  data.retweet.page_pics.length != 4}}" class='image'>
+        <block wx:for="{{data.retweet.page_pics}}">
+          <image class="image-three" mode="aspectFill" src="{{item}}" />
+        </block>
+      </view>
+      <view wx-if="{{data.retweet.media_info != undefined}}" style="position:relative;">
+        <video class="video" src="{{data.retweet.media_info.stream_url}}"></video>
+      </view>
+    </block>
+
+
 
     <view class='image operation'>
       <view bindtap='onShowComment'>
@@ -120,8 +165,8 @@
     </view>
 
 
-    <view wx:if="{{ifShowComment}}" class='edit-comment' >
-      <textarea auto-height auto-focus cursor-spacing="20" placeholder="输入评论" class="text" bindblur="onHideComment"/>
+    <view wx:if="{{ifShowComment}}" class='edit-comment'>
+      <textarea auto-height auto-focus cursor-spacing="20" placeholder="输入评论" class="text" bindblur="onHideComment" />
       <button class='comment-button'>评论</button>
 
     </view>
