@@ -30,9 +30,16 @@ Page({
       data: { page: 1 },
       success: res => {
         console.log('getWeiboList suc', res)
+<<<<<<< HEAD
         that.setData({
           tweets: res.result.tweets,
           page: 1
+=======
+        var tw = that.data.tweets.concat(res.result.tweets)
+
+        that.setData({
+          tweets: tw
+>>>>>>> 8a1325ea6fcb7b55d1e2e1d709bb918ca8d2986c
         });
       },
       fail: err => {
@@ -104,8 +111,13 @@ Page({
     });
 
     wx.cloud.callFunction({
+<<<<<<< HEAD
       name: 'getSchedule',
       data: { star_id: '' },
+=======
+      name: 'getWeiboList',
+      data: { page: that.data.page },
+>>>>>>> 8a1325ea6fcb7b55d1e2e1d709bb918ca8d2986c
       success: res => {
         console.log('getSchedule suc', res)
         var sch = res.result.schedules
