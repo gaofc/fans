@@ -67,10 +67,9 @@
       <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">微博</view>
       <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">讨论</view>
       <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">签到</view>
-      <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">行程</view>
-      <view class="tab-item {{currentTab==5?'active':''}}" data-current="5" bindtap="swichNav">集合</view>
-      <view class="tab-item {{currentTab==6?'active':''}}" data-current="6" bindtap="swichNav">活动</view>
-      <view class="tab-item {{currentTab==7?'active':''}}" data-current="7" bindtap="swichNav">周边</view>
+      <view class="tab-item {{currentTab==5?'active':''}}" data-current="4" bindtap="swichNav">集合</view>
+      <view class="tab-item {{currentTab==6?'active':''}}" data-current="5" bindtap="swichNav">活动</view>
+      <view class="tab-item {{currentTab==7?'active':''}}" data-current="6" bindtap="swichNav">周边</view>
     </scroll-view>
     <swiper current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx;margin-top:80rpx;">
       <!--推荐-->
@@ -85,34 +84,30 @@
               </swiper-item>
             </block>
           </swiper>
-
-
           <view wx:for="{{schedules}}" class='schedule-item'>
             <view class='shedule-date'>
               <view>
-                <image class="shedule-button-icon " mode="aspectFill " src="../../images/notice.png " /> {{item.date}} {{item.time}}
+                <image class="shedule-button-icon " mode="aspectFill" src="../../images/notice.png " /> {{item.date}} {{item.time}}
               </view>
             </view>
             <view class='schedule-item-content'>
               <view>
-                <image class="shedule-button-icon " mode="aspectFill " src="../../images/location.png " /> {{item.loc}}
+                <image class="shedule-button-icon " mode="aspectFill" src="../../images/location.png " /> {{item.loc}}
               </view>
               <view>
-                <image class="shedule-button-icon " mode="aspectFill " src="../../images/form.png " /> {{item.con}}
+                <image class="shedule-button-icon " mode="aspectFill" src="../../images/form.png " /> {{item.con}}
               </view>
               <view class="line ">
               </view>
             </view>
           </view>
-
-
         </scroll-view>
       </swiper-item>
       <!--微博-->
       <swiper-item>
         <scroll-view scroll-y="true " class="scoll-h" id='weibo'>
           <block wx:for="{{tweets}}">
-            <view style="background:#fff;" bindtap='toDetail' data-item='{{item}}'>
+            <view style="background:#fff;" bindtap='toDetail' data-item='{{item}}' data-type="weibo">
               <view class="item-ans">
                 <view class="avatar">
                   <image class="img" src="{{item.profile_image_url}}"></image>
@@ -122,34 +117,28 @@
                   <view class="tag">{{item.created_at}}</view>
                 </view>
               </view>
-
               <view class='item-content'>
                 <rich-text nodes="{{item.text}}"></rich-text>
               </view>
-
               <view wx-if="{{item.page_pics != undefined && item.page_pics.length == 1}}" class='image'>
                 <image class="image-one" mode="aspectFill" src="{{item.page_pics[0]}}"></image>
               </view>
-
               <view wx-if="{{item.page_pics != undefined && (item.page_pics.length == 2 || item.page_pics.length == 4)}}" class='image'>
                 <block wx:for="{{item.page_pics}}">
                   <image class="image-two" mode="aspectFill" src="{{item}}" />
                 </block>
               </view>
-
               <view wx-if="{{item.page_pics != undefined && item.page_pics.length > 2 &&  item.page_pics.length != 4}}" class='image'>
                 <block wx:for="{{item.page_pics}}">
                   <image class="image-three" mode="aspectFill" src="{{item}}" />
                 </block>
               </view>
-
               <view wx-if="{{item.media_info != undefined}}" style="position:relative;">
                 <view style="position:absolute;left:315rpx;top:180rpx;">
                   <image style="width:120rpx;height:120rpx;opacity:0.7;" mode="aspectFill" src="../../images/play.png " />
                 </view>
                 <image class="video" mode="aspectFill" src="{{item.media_info.page_pic}} "></image>
               </view>
-
               <!--retweet -->
               <block wx-if="{{item.retweet != undefined}}">
                 <view wx-if="{{item.retweet !=undefined}}" class='item-content' style="background-color:#f8f8f8;padding-top:10rpx; ">
@@ -175,8 +164,6 @@
                   <image class="video" mode="aspectFill" src="{{item.retweet.media_info.page_pic}} "></image>
                 </view>
               </block>
-
-
               <view class='image operation'>
                 <view>
                   <image class="button-icon " mode="aspectFill" src="../../images/comment_light.png " /> 0
@@ -187,55 +174,53 @@
                 </view>
               </view>
             </view>
-
           </block>
-          <view class='loading-more'>正在加载...</view>
-
+          <view id='weibo_load' class='loading-more'>正在加载...</view>
         </scroll-view>
       </swiper-item>
       <!--讨论-->
       <swiper-item>
-        <scroll-view scroll-y="true " class="scoll-h ">
-          <block wx:for="{{[1,2,3,4,5,6,7,8]}} " wx:key="*this ">
-            <view style="background:#fff ">
-              <view class="item-ans ">
-                <view class="avatar ">
-                  <image class="img " src="../../images/tmp.jpg "></image>
+        <scroll-view scroll-y="true " class="scoll-h" id='discuss'>
+          <block wx:for="{{discusses}}">
+            <view style="background:#fff;" bindtap='toDetail' data-item='{{item}}' data-type="discuss">
+              <view class="item-ans">
+                <view class="avatar">
+                  <image class="img" src="{{item.avatar_url}}"></image>
                 </view>
-                <view class="expertInfo ">
-                  <view class="name ">欢颜</view>
-                  <view class="tag ">10-19 13:20 来自 微博客户端</view>
+                <view class="expertInfo">
+                  <view class="name">{{item.nick_name}}</view>
+                  <view class="tag">{{item.update_date}}</view>
                 </view>
               </view>
-
               <view class='item-content'>
-                知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主知名情感博主
+                <rich-text nodes="{{item.content}}"></rich-text>
               </view>
-              <view>
-                <image class="image-one " mode="aspectFill " src="../../images/tmp.jpg "></image>
+              <view wx-if="{{item.pics != undefined && item.pics.length == 1}}" class='image'>
+                <image class="image-one" mode="aspectFill" src="{{item.pics[0]}}"></image>
               </view>
-              <view class='image'>
-                <image class="image-two " mode="aspectFill " src="../../images/tmp.jpg "></image>
-                <image class="image-two " mode="aspectFill " src="../../images/tmp.jpg "></image>
-              </view>
-              <view class='image'>
-                <block wx:for="{{[0,1,2]}} " wx:key="*this ">
-                  <image class="image-three " mode="aspectFill " src="../../images/tmp.jpg " />
+              <view wx-if="{{item.pics != undefined && (item.pics.length == 2 || item.pics.length == 4)}}" class='image'>
+                <block wx:for="{{item.pics}}">
+                  <image class="image-two" mode="aspectFill" src="{{item}}" />
                 </block>
               </view>
+              <view wx-if="{{item.pics != undefined && item.pics.length > 2 &&  item.pics.length != 4}}" class='image'>
+                <block wx:for="{{item.pics}}">
+                  <image class="image-three" mode="aspectFill" src="{{item}}" />
+                </block>
+              </view>
+
               <view class='image operation'>
                 <view>
-                  <image class="button-icon " mode="aspectFill " src="../../images/comment_light.png " /> 221
+                  <image class="button-icon " mode="aspectFill" src="../../images/comment_light.png " /> {{item.comment_num}}
                 </view>
 
                 <view>
-                  <image class="button-icon " mode="aspectFill " src="../../images/appreciate_light.png " /> 1020
+                  <image class="button-icon " mode="aspectFill" src="../../images/appreciate_light.png " /> {{item.like_num}}
                 </view>
               </view>
             </view>
           </block>
-
-
+          <view id='discuss_load' class='loading-more'>正在加载...</view>
         </scroll-view>
       </swiper-item>
       <!--签到-->
@@ -269,30 +254,6 @@
           </block>
         </scroll-view>
 
-      </swiper-item>
-      <!--行程-->
-      <swiper-item>
-        <scroll-view scroll-y="true " class="scoll-h ">
-          <block wx:for="{{[0,1,2,3,4,5]}} ">
-            <view class='schedule-item'>
-              <view class='shedule-date'>
-                <view>
-                  <image class="shedule-button-icon " mode="aspectFill " src="../../images/notice.png " /> 2018-10-10
-                </view>
-              </view>
-              <view class='schedule-item-content'>
-                <view>
-                  <image class="shedule-button-icon " mode="aspectFill " src="../../images/location.png " /> 郑州
-                </view>
-                <view>
-                  <image class="shedule-button-icon " mode="aspectFill " src="../../images/form.png " /> 品牌非公开活动
-                </view>
-                <view class="line ">
-                </view>
-              </view>
-            </view>
-          </block>
-        </scroll-view>
       </swiper-item>
       <!--集合-->
       <swiper-item>

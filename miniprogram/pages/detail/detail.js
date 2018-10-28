@@ -24,48 +24,60 @@ Page({
    */
   onLoad: function(options) {
     var that = this
-    var data = JSON.parse(decodeURIComponent(options.item))
+    var res = JSON.parse(decodeURIComponent(options.item))
+    var data = res.item
     console.log(data)
-    that.setData({
-      data: data
-    });
-
-    var ifDetail = false;
-    var ifRetweetDetail = false;
-    var id = ""
-    if (data.text.lastIndexOf('全文') >= 0) {
-      id = data.id
-      ifDetail = true
-    } else if (data.retweet != undefined && data.retweet.text.indexOf('全文') >= 0) {
-      id = data.retweet.id
-      ifRetweetDetail = true
-    }
-    if (ifDetail || ifRetweetDetail) {
-      wx.cloud.callFunction({
-        name: 'getWeiboDetail',
-        data: {
-          id: id
-        },
-        success: res => {
-          console.log('getWeiboDetail suc', res)
-          var longTextContent = res.result.longTextContent
-          if(ifDetail) {
-            data.text = longTextContent
-          }
-          else if (ifRetweetDetail) {
-            data.retweet.text = longTextContent
-          }
-          that.setData({
-            data: data
-          });
-        },
-        fail: err => {
-          console.error('getWeiboDetail failed', err)
-        },
-        complete: res => {}
+    if (res.type == 'weibo') {
+      data.update_date = data.created_at
+      data._id = data.id
+      data.pics = data.page_pics
+      data.avatar_url = data.profile_image_url
+      data.nick_name = data.screen_name
+      data.content = data.text
+      that.setData({
+        data: data
       })
-    }
 
+      var ifDetail = false;
+      var ifRetweetDetail = false;
+      var id = ""
+      if (data.content.lastIndexOf('全文') >= 0) {
+        id = data.id
+        ifDetail = true
+      } else if (data.retweet != undefined && data.retweet.text.lastIndexOf('全文') >= 0) {
+        id = data.retweet.id
+        ifRetweetDetail = true
+      }
+      if (ifDetail || ifRetweetDetail) {
+        wx.cloud.callFunction({
+          name: 'getWeiboDetail',
+          data: {
+            id: id
+          },
+          success: res => {
+            console.log('getWeiboDetail suc', res)
+            var longTextContent = res.result.longTextContent
+            if (ifDetail) {
+              data.content = longTextContent
+            } else if (ifRetweetDetail) {
+              data.retweet.text = longTextContent
+            }
+            that.setData({
+              data: data
+            });
+          },
+          fail: err => {
+            console.error('getWeiboDetail failed', err)
+          },
+          complete: res => {}
+        })
+      }
+
+    } else if (res.type == 'discuss') {
+      that.setData({
+        data: data
+      });
+    }
   },
 
   /**

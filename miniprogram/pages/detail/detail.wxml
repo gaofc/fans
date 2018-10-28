@@ -3,30 +3,30 @@
   <view style="background:#fff">
     <view class="item-ans">
       <view class="avatar">
-        <image class="img" src="{{data.profile_image_url}}"></image>
+        <image class="img" src="{{data.avatar_url}}"></image>
       </view>
       <view class="expertInfo">
-        <view class="name">{{data.screen_name}}</view>
-        <view class="tag">{{data.created_at}}</view>
+        <view class="name">{{data.nick_name}}</view>
+        <view class="tag">{{data.update_date}}</view>
       </view>
     </view>
 
     <view class='item-content'>
-      <rich-text nodes="{{data.text}}"></rich-text>
+      <rich-text nodes="{{data.content}}"></rich-text>
     </view>
 
-    <view wx-if="{{data.page_pics != undefined && data.page_pics.length == 1}}" class='image'>
-      <image class="image-one" mode="aspectFill" src="{{data.page_pics[0]}}"></image>
+    <view wx-if="{{data.pics != undefined && data.pics.length == 1}}" class='image'>
+      <image class="image-one" mode="aspectFill" src="{{data.pics[0]}}"></image>
     </view>
 
-    <view wx-if="{{data.page_pics != undefined && (data.page_pics.length == 2 || data.page_pics.length == 4)}}" class='image'>
-      <block wx:for="{{data.page_pics}}">
+    <view wx-if="{{data.pics != undefined && (data.pics.length == 2 || data.pics.length == 4)}}" class='image'>
+      <block wx:for="{{data.pics}}">
         <image class="image-two" mode="aspectFill" src="{{item}}" />
       </block>
     </view>
 
-    <view wx-if="{{data.page_pics != undefined && data.page_pics.length > 2 &&  data.page_pics.length != 4}}" class='image'>
-      <block wx:for="{{data.page_pics}}">
+    <view wx-if="{{data.pics != undefined && data.pics.length > 2 &&  data.pics.length != 4}}" class='image'>
+      <block wx:for="{{data.pics}}">
         <image class="image-three" mode="aspectFill" src="{{item}}" />
       </block>
     </view>
@@ -34,9 +34,6 @@
     <view wx-if="{{data.media_info != undefined}}" style="position:relative;">
       <video class="video" src="{{data.media_info.stream_url}}"></video>
     </view>
-
-
-
 
     <!--retweet -->
     <block wx-if="{{data.retweet != undefined}}">
@@ -63,22 +60,22 @@
 
 
 
-    <view class='image operation'>
+    <view class='operation'>
       <view bindtap='onShowComment'>
-        <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" /> 221
+        <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" />
       </view>
       <view>
-        <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+        <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" />
       </view>
     </view>
 
 
     <view class='schedule-date'>
       <view>
-        <image class="shedule-button-icon" mode="aspectFill" src="../../images/align_left.png" />评论 232
+        <image class="shedule-button-icon" mode="aspectFill" src="../../images/align_left.png" />评论 {{data.comment_num==undefined ? 0 : data.comment_num}}
       </view>
       <view>
-        赞 3332
+        赞 {{data.like_num==undefined ? 0 : data.like_num}}
       </view>
     </view>
 

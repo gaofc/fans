@@ -19,8 +19,11 @@ Page({
     interval: 2000,
     duration: 500,
     showSelect: false,
-    page:1,
-    schedules:[]
+    weiboPage:1,
+    schedules:[],
+    userInfo: {},
+    discussPage :0,
+    discusses: []
   },
 
   onPullDownRefresh :function(e) {
@@ -30,20 +33,30 @@ Page({
       data: { page: 1 },
       success: res => {
         console.log('getWeiboList suc', res)
-<<<<<<< HEAD
         that.setData({
           tweets: res.result.tweets,
-          page: 1
-=======
-        var tw = that.data.tweets.concat(res.result.tweets)
-
-        that.setData({
-          tweets: tw
->>>>>>> 8a1325ea6fcb7b55d1e2e1d709bb918ca8d2986c
+          weiboPage: 1
         });
       },
       fail: err => {
         console.error('getWeiboList failed', err)
+      },
+      complete: res => {
+      }
+    })
+
+    wx.cloud.callFunction({
+      name: 'getDiscuss',
+      data: { page: that.data.discussPage },
+      success: res => {
+        console.log('getDiscuss suc', res)
+        that.setData({
+          discusses: res.result.data,
+          discussPage: 0
+        });
+      },
+      fail: err => {
+        console.error('getDiscuss failed', err)
       },
       complete: res => {
       }
@@ -57,8 +70,11 @@ Page({
   },
 
   toDetail: function(e) {
-    console.log(e)
-    var agr = encodeURIComponent(JSON.stringify(e.currentTarget.dataset.item) )
+    var data = {
+      type: e.currentTarget.dataset.type,
+      item: e.currentTarget.dataset.item
+    }
+    var agr = encodeURIComponent(JSON.stringify(data) )
     wx.navigateTo({
       url: '../detail/detail?item=' + agr,
     })
@@ -110,18 +126,29 @@ Page({
       }
     });
 
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              console.log(res)
+              app.globalData.userInfo = res.userInfo
+              app.globalData.logged = true
+            }
+          })
+        }
+      }
+    })
+
     wx.cloud.callFunction({
-<<<<<<< HEAD
       name: 'getSchedule',
       data: { star_id: '' },
-=======
-      name: 'getWeiboList',
-      data: { page: that.data.page },
->>>>>>> 8a1325ea6fcb7b55d1e2e1d709bb918ca8d2986c
       success: res => {
         console.log('getSchedule suc', res)
         var sch = res.result.schedules
-        console.log(sch)
+        var openid = res.result.openid
+        app.globalData.openid = openid
         that.setData({
           schedules: sch
         });
@@ -133,25 +160,53 @@ Page({
       }
     })
 
-    this._observer = wx.createIntersectionObserver(this)
-    this._observer
+    this.weibo_observer = wx.createIntersectionObserver(this)
+    this.weibo_observer
       .relativeTo('#weibo')
-      .observe('.loading-more', (res) => {
+      .observe('#weibo_load', (res) => {
         console.log(res)
         if (res.intersectionRatio > 0) {
           wx.cloud.callFunction({
             name: 'getWeiboList',
-            data: { page: that.data.page },
+            data: { page: that.data.weiboPage },
             success: res => {
               console.log('getWeiboList suc', res)
               var tw = that.data.tweets.concat(res.result.tweets)
               that.setData({
                 tweets: tw,
-                page: that.data.page+1
+                weiboPage: that.data.weiboPage+1
               });
             },
             fail: err => {
               console.error('getWeiboList failed', err)
+            },
+            complete: res => {
+            }
+          })
+        }
+      });
+
+
+
+    this.discuss_observer = wx.createIntersectionObserver(this)
+    this.discuss_observer
+      .relativeTo('#discuss')
+      .observe('#discuss_load', (res) => {
+        console.log(res)
+        if (res.intersectionRatio > 0) {
+          wx.cloud.callFunction({
+            name: 'getDiscuss',
+            data: { page: that.data.discussPage },
+            success: res => {
+              console.log('getDiscuss suc', res)
+              var dis = that.data.discusses.concat(res.result.data)
+              that.setData({
+                discusses: dis,
+                discussPage: that.data.discussPage + 1
+              });
+            },
+            fail: err => {
+              console.error('getDiscuss failed', err)
             },
             complete: res => {
             }

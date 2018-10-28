@@ -1,17 +1,18 @@
-<view class='top-oper'>
-  <view class='cancel-oper'>取消</view>
-  <view class='post-oper'>发表</view>
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class='top-oper'>
+    <button class='cancel-oper' formType="reset">取消</button>
+    <button class='post-oper' formType="submit">发表</button>
+  </view>
+  <view style="width: 100%;">
+    <textarea auto-height auto-focus cursor-spacing="20" placeholder="输入你想说的话" class="text" name="text"/>
 
-</view>
-<view style="width: 100%;">
-  <textarea auto-height auto-focus cursor-spacing="20" placeholder="输入你想说的话" class="text" />
+  </view>
 
-</view>
+  <view class='image-list'>
+    <block wx:for="{{imageList}}" wx:for-item="image">
+      <image  mode="aspectFill" src="{{image}}" data-src="{{image}}" class='images-image' bindtap="previewImage"></image>
+    </block>
+    <image wx:if="{{imageList.length<9}}" src="../../images/add.png" class='images-image' bindtap="chooseImage"></image>
 
-<view class='image-list'>
-  <block wx:for="{{imageList}}" wx:for-item="image">
-    <image src="{{image}}" data-src="{{image}}" class='images-image' bindtap="previewImage"></image>
-  </block>
-  <image wx:if="{{imageList.length<9}}" src="../../images/add.png" class='images-image' bindtap="chooseImage"></image>
-
-</view>
+  </view>
+</form>

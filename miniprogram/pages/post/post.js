@@ -1,8 +1,78 @@
 // miniprogram/pages/post/post.js
+
+const app = getApp()
+
 Page({
   data: {
     imageList:[],
     countLeft: 9,
+    cloudPaths:[]
+  },
+
+  formSubmit:function(e) {
+    var openid = app.globalData.openid
+    var text = e.detail.value.text
+    var that = this
+    console.log(text)
+
+    var cloudPaths = []
+    for (var i = 0; i <that.data.imageList.length; i++) {
+      console.log(that.data.imageList[i])
+      var tmp = that.data.imageList[i].split('/')
+      var picName = tmp[tmp.length - 1]
+      var cloudName = 'cloud://fans-d900c2.6661-fans-d900c2/discuss_pics/' + openid + '/' + picName
+      cloudPaths.push(cloudName)
+      wx.cloud.uploadFile({
+        cloudPath: 'discuss_pics/' + openid + '/' + picName,
+        filePath: that.data.imageList[i],
+        success: res => {
+          // get resource ID
+          console.log(res)
+        },
+        fail: err => {
+          // handle error
+          console.log(err)
+        },
+        complete: res => {
+          wx.showModal({
+            title: '成功',
+            content: '发布讨论成功',
+            success(res) {
+              wx.navigateBack({
+                delta: 1
+              })
+            }
+          })
+        }
+      })
+    }
+    console.log(cloudPaths)
+
+    wx.cloud.callFunction({
+      name: 'setDiscuss',
+      data: {
+        star: app.globalData.currentStar,
+        user: app.globalData.userInfo,
+        content: text,
+        pics: cloudPaths
+      },
+      success: res => {
+        console.log('setDiscuss success ', res)
+
+      },
+      fail: err => {
+        console.error('setDiscuss failed ', err)
+      },
+      complete: res => {
+      }
+    })
+
+  },
+
+  formReset: function() {
+    wx.navigateBack({
+      delta:1
+    })
   },
 
   chooseImage: function () {

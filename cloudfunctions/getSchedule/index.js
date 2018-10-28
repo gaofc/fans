@@ -8,14 +8,14 @@ function parseHtmlPage(html) {
   var $ = cheerio.load(html)
   var dom = $('tbody').find('tr')
   var schs = []
-  dom.each(function (item) {
+  dom.each(function(item) {
     var sch_data = {}
     var sch = $(this);
     var date = ''
     var time = ''
     var con = ''
     var loc = ''
-    sch.find('td').each(function (key, item) {
+    sch.find('td').each(function(key, item) {
       var t = $(this);
       console.log(t.text(), key)
       if (key == 0)
@@ -34,13 +34,11 @@ function parseHtmlPage(html) {
       loc: loc.replace(/\n/g, '').replace(/ /g, '')
     })
   });
-  return {
-    schedules: schs
-  }
+  return schs
 }
 
 
-exports.main = async (event, context) => {
+exports.main = async(event, context) => {
   let {
     userInfo,
     star_id
@@ -61,7 +59,10 @@ exports.main = async (event, context) => {
       .then((res) => {
         return res.text()
       }).then((body) => {
-        resolve(parseHtmlPage(body))
+        resolve({
+          schedules: parseHtmlPage(body),
+          openid: openId
+        })
       }).catch(err => console.error(err))
   })
 }

@@ -1,7 +1,6 @@
 // miniprogram/pages/me/me.js
 const app = getApp()
 
-
 Page({
 
   /**
@@ -17,34 +16,26 @@ Page({
     if (e.detail.userInfo) {
       app.globalData.userInfo = e.detail.userInfo
       app.globalData.logged = true
+      
       this.setData({
         avatar: e.detail.userInfo.avatarUrl,
         name: e.detail.userInfo.nickName
       })
 
       wx.cloud.callFunction({
-        name: 'saveUserInfo',
+        name: 'setUser',
         data: {
           user : e.detail.userInfo
         },
         success: res => {
-          console.log('[云函数] [login] user openid: ', res.result.openid)
-          app.globalData.openid = res.result.openid
-
+          console.log('setUser success', res)
         },
         fail: err => {
-          console.error('[云函数] [login] 调用失败', err)
-          // wx.navigateTo({
-          //   url: '../deployFunctions/deployFunctions',
-          // })
+          console.error('setUser failed', err)
         },
         complete: res => {
-
         }
       })
-
-
-
     }
   },
 
@@ -68,20 +59,18 @@ Page({
         url: '../keep/keep',
       })
     }
-    
   },
-
-
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      logged: app.globalData.logged,
-      avatar: app.globalData.avatar,
-      name: app.globalData.name
-    })
+    if (app.globalData.logged == true) {
+      this.setData({
+        avatar: app.globalData.userInfo.avatarUrl,
+        name: app.globalData.userInfo.nickName
+      })
+    }
   },
 
   /**
