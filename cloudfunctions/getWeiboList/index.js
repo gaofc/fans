@@ -86,10 +86,7 @@ exports.main = async (event, context) => {
     appId
   } = userInfo
 
-<<<<<<< HEAD
   page = page == undefined ? 1 : page
-=======
->>>>>>> 8a1325ea6fcb7b55d1e2e1d709bb918ca8d2986c
   var url = `https://m.weibo.cn/api/container/getIndex?uid=2706896955&luicode=10000011&lfid=100103type%3D1%26q%3D%E5%BC%A0%E8%89%BA%E5%85%B4&featurecode=20000320&type=uid&value=2706896955&containerid=1076032706896955&page=${page}`
 
 

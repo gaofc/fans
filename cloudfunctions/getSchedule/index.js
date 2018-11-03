@@ -48,10 +48,11 @@ exports.main = async(event, context) => {
     appId
   } = userInfo
 
-  var year = '2018'
-  var month = '10'
-  var url = `https://idol001.com/xingcheng/list/star-zhangyixing-6618/${year}/${month}/`
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
 
+  var url = `https://idol001.com/xingcheng/list/star-zhangyixing-6618/${year}/${month}/`
 
   return new Promise((resolve, reject) => {
     console.log("url:" + url)

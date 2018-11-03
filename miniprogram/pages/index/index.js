@@ -23,7 +23,9 @@ Page({
     schedules:[],
     userInfo: {},
     discussPage :0,
-    discusses: []
+    discusses: [],
+    hotPage: 1,
+    hotTweets: []
   },
 
   onPullDownRefresh :function(e) {
@@ -207,6 +209,33 @@ Page({
             },
             fail: err => {
               console.error('getDiscuss failed', err)
+            },
+            complete: res => {
+            }
+          })
+        }
+      });
+
+
+    this.hot_observer = wx.createIntersectionObserver(this)
+    this.hot_observer
+      .relativeTo('#hot')
+      .observe('#hot_load', (res) => {
+        console.log(res)
+        if (res.intersectionRatio > 0) {
+          wx.cloud.callFunction({
+            name: 'getHot',
+            data: { page: that.data.hotPage },
+            success: res => {
+              console.log('getHot suc', res)
+              var dis = that.data.hotTweets.concat(res.result.tweets)
+              that.setData({
+                hotTweets: dis,
+                hotPage: that.data.hotPage + 1
+              });
+            },
+            fail: err => {
+              console.error('getHot failed', err)
             },
             complete: res => {
             }

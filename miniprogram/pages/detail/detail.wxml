@@ -61,7 +61,7 @@
 
 
     <view class='operation'>
-      <view bindtap='onShowComment'>
+      <view bindtap='onShowComment' data-type='0'>
         <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" />
       </view>
       <view>
@@ -79,97 +79,32 @@
       </view>
     </view>
 
-    <view class='comment-item'>
+
+    <view wx:for="{{comments}}" class='comment-item'>
       <view>
-        <image class='comment-item-avtar' src='../../images/tmp.jpg'></image>
+        <image class='comment-item-avtar' src='{{item.avatar_url}}'></image>
       </view>
       <view class='comment-item-content'>
-        <view class='comment-item-content-name'>我是张三</view>
-        <view>
-          这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论
-        </view>
+        <view class='comment-item-content-name'>{{item.nick_name}}</view>
+        <view>{{item.content}}</view>
+        <navigator wx:if="{{item.reply_num != 0}}" class='reply' bindtap='toComment' data-item='{{item}}'>
+          <text style='color: #5073A0;'>共{{item.reply_num}}条回复 ></text>
+        </navigator>
         <view class='comment-item-content-bottom'>
-          <view>10-21 10:21</view>
+          <view>{{item.update_date}}</view>
           <view>
-            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
+            <image class="comment-item-content-bottom-image" style="margin-right:40rpx;" mode="aspectFill" src="../../images/comment_light.png" bindtap='onShowComment' data-comment-id="{{item._id}}" data-comment-opeind="{{item.openid}}" data-type='1' />
+            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> {{item.like_num}}
           </view>
-
-        </view>
-      </view>
-
-
-    </view>
-
-    <view class='comment-item'>
-      <view>
-        <image class='comment-item-avtar' src='../../images/tmp.jpg'></image>
-      </view>
-      <view class='comment-item-content'>
-        <view class='comment-item-content-name'>我是张三</view>
-        <view>
-          这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论
-        </view>
-        <view class='comment-item-content-bottom'>
-          <view>10-21 10:21</view>
-          <view>
-            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
-          </view>
-
-        </view>
-      </view>
-
-
-    </view>
-
-    <view class='comment-item'>
-      <view>
-        <image class='comment-item-avtar' src='../../images/tmp.jpg'></image>
-      </view>
-      <view class='comment-item-content'>
-        <view class='comment-item-content-name'>我是张三</view>
-        <view>
-          这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论
-        </view>
-        <view class='comment-item-content-bottom'>
-          <view>10-21 10:21</view>
-          <view>
-            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
-          </view>
-
-        </view>
-      </view>
-
-
-    </view>
-
-    <view class='comment-item'>
-      <view>
-        <image class='comment-item-avtar' src='../../images/tmp.jpg'></image>
-      </view>
-      <view class='comment-item-content'>
-        <view class='comment-item-content-name'>我是张三</view>
-        <view>
-          这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论这是一条长评论
-        </view>
-        <view class='comment-item-content-bottom' style='margin-bottom:100rpx;'>
-          <view>10-21 10:21</view>
-          <view>
-            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> 1020
-          </view>
-
         </view>
       </view>
     </view>
-
-
-    <view wx:if="{{ifShowComment}}" class='edit-comment'>
-      <textarea auto-height auto-focus cursor-spacing="20" placeholder="输入评论" class="text" bindblur="onHideComment" />
-      <button class='comment-button'>评论</button>
-
-    </view>
-    <view style="margin-bottom:100rpx;">.</view>
-
-
-
+    <form bindsubmit="formSubmit">
+      <view wx:if="{{ifShowComment}}" class='edit-comment'>
+        <textarea auto-height auto-focus cursor-spacing="20" placeholder="输入评论" class="text" bindblur="onHideComment" name="com" />
+        <button class='comment-button' formType="submit">评论</button>
+      </view>
+      <view style="margin-bottom:100rpx;color:#fff">.</view>
+    </form>
   </view>
 </view>

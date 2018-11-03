@@ -139,6 +139,7 @@
   display: flex;
   flex-direction: column;
   margin-right: 20rpx;
+  width: 95%;
 }
 .comment-item-content-name {
   font-size: 14px;
@@ -183,4 +184,9 @@
 }
 .video {
   width: 100%;
+}
+.reply {
+  background-color: #f7f7f7;
+  width: 95%;
+  padding: 10rpx;
 }

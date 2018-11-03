@@ -34,15 +34,7 @@ Page({
           console.log(err)
         },
         complete: res => {
-          wx.showModal({
-            title: '成功',
-            content: '发布讨论成功',
-            success(res) {
-              wx.navigateBack({
-                delta: 1
-              })
-            }
-          })
+          
         }
       })
     }
@@ -64,6 +56,15 @@ Page({
         console.error('setDiscuss failed ', err)
       },
       complete: res => {
+        wx.showModal({
+          title: '成功',
+          content: '发布讨论成功',
+          success(res) {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        })
       }
     })
 
