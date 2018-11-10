@@ -1,10 +1,8 @@
 const cloud = require('wx-server-sdk')
 const fetch = require('node-fetch')
 
-
 cloud.init()
 const db = cloud.database()
-const _ = db.command
 
 function parseJson(jsonStr) {
   var jsonObj = JSON.parse(jsonStr);
@@ -15,13 +13,14 @@ function parseJson(jsonStr) {
     var tweet = {}
     var mblog = cards[i].mblog
     if (mblog != undefined) {
-      tweet.created_at = mblog.created_at
-      tweet.screen_name = mblog.user.screen_name
-      tweet.profile_image_url = mblog.user.profile_image_url
-      tweet.id = mblog.id
+      tweet.type = 0
+      tweet.update_date = mblog.created_at
+      tweet.nick_name = mblog.user.screen_name
+      tweet.avatar_url = mblog.user.profile_image_url
+      tweet._id = mblog.id
       var text = mblog.text
       text = text.replace(/<img.*?>/g, '').replace("全文", "<span style='color: #5073A0;'>全文</span>")
-      tweet.text = text
+      tweet.content = text
       var page_info = mblog.page_info
       if (page_info != undefined) {
         if (page_info.media_info != undefined) {
@@ -30,15 +29,15 @@ function parseJson(jsonStr) {
           media_info.page_pic = page_info.page_pic.url
           tweet.media_info = media_info
         } else {
-          tweet.page_pics = [page_info.page_pic.url]
+          tweet.pics = [page_info.page_pic.url]
         }
       }
       var pics = mblog.pics
       if (pics != undefined) {
-        tweet.page_pics = []
+        tweet.pics = []
         for (var j = 0; j < pics.length; j++) {
           var pic_url = pics[j].url
-          tweet.page_pics.push(pic_url)
+          tweet.pics.push(pic_url)
         }
       }
       var retweeted_status = mblog.retweeted_status
@@ -68,13 +67,36 @@ function parseJson(jsonStr) {
         }
         tweet.retweet = retweet
       }
+      saveToDB(tweet)
       tweets.push(tweet)
     }
   }
-  return tweets
+  console.log(tweets)
+  return {
+    tweets: tweets
+  }
 }
 
-exports.main = async(event, context) => {
+function saveToDB(item) {
+  db.collection('discuss').where({
+    _id: item.id
+  })
+    .count().then((res) => {
+      console.log('####' + res)
+      if (res.total == 0) {
+        db.collection('discuss').add({
+          data: {
+            item
+          }
+        }).then(res => {
+          console.log(res)
+        })
+      }
+    })
+}
+
+
+exports.main = async (event, context) => {
   let {
     userInfo,
     page
@@ -94,24 +116,7 @@ exports.main = async(event, context) => {
       .then((res) => {
         return res.text()
       }).then((body) => {
-        return parseJson(body)
-      }).then((tweets) => {
-        ids = []
-        for (var i = 0; i < tweets.length; i++) {
-          ids.push(tweets[i].id)
-        }
-        console.log(ids)
-        db.collection('discuss').where({
-            _id: _.in(ids)
-          })
-          .get().then(res => {
-            console.log(res)
-            data = {
-              tweets: tweets,
-              num: res.data
-            }
-            resolve(data)
-          })
+        resolve(parseJson(body))
       }).catch(err => console.error(err))
   })
 }

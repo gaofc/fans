@@ -212,6 +212,16 @@
   background: #4675f9;
 }
 
+.refresh-btn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  position: fixed;
+  right: 50rpx;
+  top: 140rpx;
+  z-index: 99;
+}
+
 .scoll-h {
   height: 100%;
 }

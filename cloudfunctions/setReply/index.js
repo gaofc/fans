@@ -21,6 +21,17 @@ exports.main = async(event, context) => {
     appId
   } = userInfo
   try {
+    db.collection('comment').where({
+        _id: comment_id
+      })
+      .update({
+        data: {
+          reply_num: _.inc(1)
+        },
+      }).then(res => {
+        console.log(res)
+      })
+
     return new Promise((resolve, reject) => {
       if (type == 1) {
         db.collection('comment').add({
@@ -39,24 +50,13 @@ exports.main = async(event, context) => {
           }
         }).then(res => {
           console.log(res)
-          db.collection('comment').where({
-            _id: comment_id
-          })
-            .update({
-              data: {
-                reply_num: _.inc(1)
-              },
-            }).then(res => {
-              console.log(res)
-              var data = {
-                dbmsg: res,
-                openid: openId
-              }
-              resolve(data)
-            })
+          var data = {
+            dbmsg: res,
+            openid: openId
+          }
+          resolve(data)
         })
-      }
-      else if (type == 2) {
+      } else if (type == 2) {
         db.collection('comment').add({
           data: {
             star: star,
@@ -76,21 +76,11 @@ exports.main = async(event, context) => {
           }
         }).then(res => {
           console.log(res)
-          db.collection('comment').where({
-            _id: comment_id
-          })
-            .update({
-              data: {
-                reply_num: _.inc(1)
-              },
-            }).then(res => {
-              console.log(res)
-              var data = {
-                dbmsg: res,
-                openid: openId
-              }
-              resolve(data)
-            })
+          var data = {
+            dbmsg: res,
+            openid: openId
+          }
+          resolve(data)
         })
       }
 

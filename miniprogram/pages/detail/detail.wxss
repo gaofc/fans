@@ -17,6 +17,12 @@
 .item-content {
   padding: 0 30rpx 20rpx 30rpx;
 }
+.image {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 
 .image-one {
   padding-top: 6rpx;

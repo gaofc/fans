@@ -14,6 +14,63 @@ Page({
     commentInfo: {},
     conmmentType: 0
   },
+
+  previewImg: function (e) {
+    console.log(e)
+    var current = e.currentTarget.dataset.src
+    var url = e.currentTarget.dataset.urls
+
+    wx.previewImage({
+      current: current,
+      urls: url
+    })
+  },
+
+  onLike: function(e) {
+    var type = e.currentTarget.dataset.type
+    var that = this
+    var id = ''
+    if (type == 0) {
+      id = that.data.data._id
+      that.data.data.hasLike = true
+      that.data.data.like_num += 1
+      that.setData({
+        data: that.data.data
+      })
+    } else if (type == 1) {
+      id = e.currentTarget.dataset.commentId
+      for (var i = 0; i < that.data.comments.length; i++) {
+        if (id == that.data.comments[i]._id) {
+          that.data.comments[i].hasLike = true
+          that.data.comments[i].like_num += 1
+          break
+        }
+      }
+      that.setData({
+        comments: that.data.comments
+      })
+    }
+    wx.setStorage({
+      key: 'hasLike',
+      data: id
+    })
+
+    wx.cloud.callFunction({
+      name: 'setLike',
+      data: {
+        type: type,
+        id: id
+      },
+      success: res => {
+        console.log('setLike success ', res)
+      },
+      fail: err => {
+        console.error('setLike failed ', err)
+      },
+      complete: res => {}
+    })
+  },
+
   onShowComment: function(e) {
     var commentInfo = {}
     if (e.currentTarget.dataset.type == 1) {
@@ -31,7 +88,7 @@ Page({
       ifShowComment: false
     })
   },
-  toComment: function (e) {
+  toComment: function(e) {
     console.log(e)
     var agr = encodeURIComponent(JSON.stringify(e.currentTarget.dataset.item))
     wx.navigateTo({
@@ -114,13 +171,17 @@ Page({
       fail: err => {
         console.error('getCommentList failed', err)
       },
-      complete: res => { }
+      complete: res => {}
     })
 
 
   },
 
   formSubmit: function(e) {
+    wx.showToast({
+      title: '正在提交',
+      icon: 'loading'
+    })
     console.log(e)
     var com = e.detail.value.com
     var that = this
@@ -136,16 +197,44 @@ Page({
         },
         success: res => {
           console.log('setComment success ', res)
+          wx.setStorage({
+            key: 'hasComment',
+            data: that.data.data._id
+          })
+          wx.showToast({
+            title: '评论成功',
+            icon: 'success'
+          })
+
+          wx.cloud.callFunction({
+            name: 'getCommentList',
+            data: {
+              discuss_id: that.data.data._id,
+              page: that.data.page
+            },
+            success: res => {
+              console.log('getCommentList suc', res)
+              that.setData({
+                comments: res.result.data
+              });
+            },
+            fail: err => {
+              console.error('getCommentList failed', err)
+            },
+            complete: res => { }
+          })
+
 
         },
         fail: err => {
           console.error('setComment failed ', err)
+          wx.showToast({
+            title: '评论失败',
+          })
         },
-        complete: res => {
-        }
+        complete: res => {}
       })
-    }
-    else if (that.data.conmmentType == 1) {
+    } else if (that.data.conmmentType == 1) {
       wx.cloud.callFunction({
         name: 'setReply',
         data: {
@@ -158,12 +247,35 @@ Page({
         },
         success: res => {
           console.log('setReply success ', res)
+          wx.cloud.callFunction({
+            name: 'getCommentList',
+            data: {
+              discuss_id: that.data.data._id,
+              page: that.data.page
+            },
+            success: res => {
+              console.log('getCommentList suc', res)
+              that.setData({
+                comments: res.result.data
+              });
+            },
+            fail: err => {
+              console.error('getCommentList failed', err)
+            },
+            complete: res => { }
+          })
+          wx.showToast({
+            title: '回复成功',
+            icon: 'success'
+          })
         },
         fail: err => {
           console.error('setReply failed ', err)
+          wx.showToast({
+            title: '回复失败',
+          })
         },
-        complete: res => {
-        }
+        complete: res => {}
       })
     }
   },

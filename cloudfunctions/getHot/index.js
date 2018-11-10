@@ -2,7 +2,8 @@ const cloud = require('wx-server-sdk')
 const fetch = require('node-fetch')
 
 cloud.init()
-
+const db = cloud.database()
+const _ = db.command
 
 function parseJson(jsonStr) {
   var jsonObj = JSON.parse(jsonStr);
@@ -72,7 +73,7 @@ function parseJson(jsonStr) {
     }
   }
   console.log(tweets)
-  return { tweets: tweets }
+  return tweets
 }
 
 
@@ -96,7 +97,24 @@ exports.main = async (event, context) => {
       .then((res) => {
         return res.text()
       }).then((body) => {
-        resolve(parseJson(body))
+        return parseJson(body)
+      }).then((tweets) => {
+        ids = []
+        for (var i = 0; i < tweets.length; i++) {
+          ids.push(tweets[i].id)
+        }
+        console.log(ids)
+        db.collection('discuss').where({
+          _id: _.in(ids)
+        })
+          .get().then(res => {
+            console.log(res)
+            data = {
+              tweets: tweets,
+              num: res.data
+            }
+            resolve(data)
+          })
       }).catch(err => console.error(err))
   })
 }

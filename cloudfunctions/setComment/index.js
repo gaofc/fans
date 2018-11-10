@@ -1,6 +1,7 @@
 const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database()
+const _ = db.command
 
 exports.main = async (event, context) => {
   let {
@@ -16,6 +17,30 @@ exports.main = async (event, context) => {
     appId
   } = userInfo
   try {
+    db.collection('discuss').where({
+      _id: discuss_id
+    })
+      .update({
+        data: {
+          comment_num: _.inc(1)
+        },
+      }).then(res => {
+        console.log(res)
+        if (res.stats.updated == 0) {
+          db.collection('discuss').add({
+            data: {
+              _id: discuss_id,
+              type: 1,
+              like_num: 0,
+              comment_num: 1,
+              update_date: db.serverDate()
+            }
+          }).then(res => {
+            console.log(res)
+          })
+        }
+      })
+
     return new Promise((resolve, reject) => {
       db.collection('comment').add({
         data: {

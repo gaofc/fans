@@ -35,6 +35,10 @@ Page({
   },
 
   formSubmit: function (e) {
+    wx.showToast({
+      title: '正在提交',
+      icon: 'loading'
+    })
     console.log(e)
     var com = e.detail.value.com
     var that = this
@@ -51,9 +55,32 @@ Page({
         },
         success: res => {
           console.log('setReply success ', res)
+          wx.showToast({
+            title: '回复成功',
+            icon: 'success'
+          })
+          wx.cloud.callFunction({
+            name: 'getReply',
+            data: {
+              comment_id: that.data.comment._id
+            },
+            success: res => {
+              console.log('getReply suc', res)
+              that.setData({
+                replys: res.result.data
+              })
+            },
+            fail: err => {
+              console.error('getReply failed', err)
+            },
+            complete: res => { }
+          })
         },
         fail: err => {
           console.error('setReply failed ', err)
+          wx.showToast({
+            title: '回复失败',
+          })
         },
         complete: res => {
         }
@@ -74,9 +101,32 @@ Page({
           reply_name: that.data.replyInfo.replyName
         },
         success: res => {
+          wx.showToast({
+            title: '回复成功',
+            icon: 'success'
+          })
+          wx.cloud.callFunction({
+            name: 'getReply',
+            data: {
+              comment_id: that.data.comment._id
+            },
+            success: res => {
+              console.log('getReply suc', res)
+              that.setData({
+                replys: res.result.data
+              })
+            },
+            fail: err => {
+              console.error('getReply failed', err)
+            },
+            complete: res => { }
+          })
           console.log('setReply success ', res)
         },
         fail: err => {
+          wx.showToast({
+            title: '回复失败',
+          })
           console.error('setReply failed ', err)
         },
         complete: res => {

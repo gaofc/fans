@@ -16,18 +16,18 @@
     </view>
 
     <view wx-if="{{data.pics != undefined && data.pics.length == 1}}" class='image'>
-      <image class="image-one" mode="aspectFill" src="{{data.pics[0]}}"></image>
+      <image class="image-one" mode="aspectFill" src="{{data.pics[0]}}" catchtap='previewImg' data-src='{{data.pics[0]}}' data-urls='{{data.pics}}'></image>
     </view>
 
     <view wx-if="{{data.pics != undefined && (data.pics.length == 2 || data.pics.length == 4)}}" class='image'>
-      <block wx:for="{{data.pics}}">
-        <image class="image-two" mode="aspectFill" src="{{item}}" />
+      <block wx:for="{{data.pics}}" wx:for-item="pic">
+        <image class="image-two" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{data.pics}}' />
       </block>
     </view>
 
     <view wx-if="{{data.pics != undefined && data.pics.length > 2 &&  data.pics.length != 4}}" class='image'>
-      <block wx:for="{{data.pics}}">
-        <image class="image-three" mode="aspectFill" src="{{item}}" />
+      <block wx:for="{{data.pics}}" wx:for-item="pic">
+        <image class="image-three" mode="aspectFill" src="{{pic}}"  catchtap='previewImg' data-src='{{pic}}' data-urls='{{data.pics}}'/>
       </block>
     </view>
 
@@ -64,7 +64,10 @@
       <view bindtap='onShowComment' data-type='0'>
         <image class="button-icon" mode="aspectFill" src="../../images/comment_light.png" />
       </view>
-      <view>
+      <view wx:if='{{data.hasLike == true}}'>
+        <image class="button-icon" mode="aspectFill" src="../../images/appreciate_down.png" />
+      </view>
+      <view wx:else bindtap='onLike' data-type='0'>
         <image class="button-icon" mode="aspectFill" src="../../images/appreciate_light.png" />
       </view>
     </view>
@@ -92,9 +95,14 @@
         </navigator>
         <view class='comment-item-content-bottom'>
           <view>{{item.update_date}}</view>
-          <view>
-            <image class="comment-item-content-bottom-image" style="margin-right:40rpx;" mode="aspectFill" src="../../images/comment_light.png" bindtap='onShowComment' data-comment-id="{{item._id}}" data-comment-opeind="{{item.openid}}" data-type='1' />
-            <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> {{item.like_num}}
+          <view style='display: flex;'>
+            <view bindtap='onShowComment' data-comment-id="{{item._id}}" data-comment-opeind="{{item.openid}}" data-type='1' style="margin-right:40rpx;">
+              <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/comment_light.png" />
+            </view>
+            <view wx:if='{{item.hasLike == true}}' style='color:#CC6666;'>
+              <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_down.png" /> {{item.like_num}}</view>
+            <view wx:else bindtap='onLike' data-type='1' data-comment-id="{{item._id}}">
+              <image class="comment-item-content-bottom-image" mode="aspectFill" src="../../images/appreciate_light.png" /> {{item.like_num}}</view>
           </view>
         </view>
       </view>

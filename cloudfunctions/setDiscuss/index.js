@@ -19,6 +19,7 @@ exports.main = async (event, context) => {
       db.collection('discuss').add({
         data: {
           avatar_url: user.avatarUrl,
+          type: 0,
           nick_name: user.nickName,
           content: content,
           openid: openId,

@@ -17,7 +17,8 @@ exports.main = async(event, context) => {
   } = userInfo
   try {
     return await db.collection('discuss').where({
-      star: star
+      star: star,
+      type: 0
       })
       .orderBy('update_date', 'desc')
       .skip(each * page)

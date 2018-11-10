@@ -5,6 +5,9 @@
       <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
     </view>
     <navigator url="../post/post" wx:if="{{currentTab==3}}" class='post-btn'>发布</navigator>
+    <image src='../../images/refresh.png' wx:if="{{currentTab==1}}" class='refresh-btn' bindtap='onRefresh' data-type='0'></image>
+    <image src='../../images/refresh.png' wx:if="{{currentTab==2}}" class='refresh-btn' bindtap='onRefresh' data-type='1'></image>
+    <image src='../../images/refresh.png' wx:if="{{currentTab==3}}" class='refresh-btn' bindtap='onRefresh' data-type='2'></image>
     <scroll-view scroll-x="true" wx:if="{{showSelect}}" class='star-select-tab' scroll-left='0'>
       <view class='star'>
         <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
@@ -102,6 +105,7 @@
               </view>
             </view>
           </view>
+          <view id='schedule_load' class='loading-more'>正在加载...</view>
         </scroll-view>
       </swiper-item>
       <!--微博-->
@@ -122,16 +126,16 @@
                 <rich-text nodes="{{item.text}}"></rich-text>
               </view>
               <view wx-if="{{item.page_pics != undefined && item.page_pics.length == 1}}" class='image'>
-                <image class="image-one" mode="aspectFill" src="{{item.page_pics[0]}}"></image>
+                <image class="image-one" mode="aspectFill" src="{{item.page_pics[0]}}" catchtap='previewImg' data-src='{{item.page_pics[0]}}' data-urls='{{item.page_pics}}'></image>
               </view>
               <view wx-if="{{item.page_pics != undefined && (item.page_pics.length == 2 || item.page_pics.length == 4)}}" class='image'>
-                <block wx:for="{{item.page_pics}}">
-                  <image class="image-two" mode="aspectFill" src="{{item}}" />
+                <block wx:for="{{item.page_pics}}" wx:for-item="pic">
+                  <image class="image-two" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.page_pics}}' />
                 </block>
               </view>
               <view wx-if="{{item.page_pics != undefined && item.page_pics.length > 2 &&  item.page_pics.length != 4}}" class='image'>
-                <block wx:for="{{item.page_pics}}">
-                  <image class="image-three" mode="aspectFill" src="{{item}}" />
+                <block wx:for="{{item.page_pics}}" wx:for-item="pic">
+                  <image class="image-three" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.page_pics}}' />
                 </block>
               </view>
               <view wx-if="{{item.media_info != undefined}}" style="position:relative;">
@@ -146,16 +150,16 @@
                   <rich-text nodes="<span style='color:#5073A0;'>@{{item.retweet.name}} </span>{{item.retweet.text}}"></rich-text>
                 </view>
                 <view wx-if="{{item.retweet.page_pics != undefined && item.retweet.page_pics.length == 1}}" class='image'>
-                  <image class="image-one" mode="aspectFill" src="{{item.retweet.page_pics[0]}}"></image>
+                  <image class="image-one" mode="aspectFill" src="{{item.retweet.page_pics[0]}}" catchtap='previewImg' data-src='{{item.retweet.page_pics[0]}}' data-urls='{{item.retweet.page_pics}}'></image>
                 </view>
                 <view wx-if="{{item.retweet.page_pics != undefined && (item.retweet.page_pics.length == 2 || item.retweet.page_pics.length == 4)}}" class='image'>
-                  <block wx:for="{{item.retweet.page_pics}}">
-                    <image class="image-two" mode="aspectFill" src="{{item}}" />
+                  <block wx:for="{{item.retweet.page_pics}}" wx:for-item="pic">
+                    <image class="image-two" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.retweet.page_pics}}' />
                   </block>
                 </view>
                 <view wx-if="{{item.retweet.page_pics != undefined && item.retweet.page_pics.length > 2 &&  item.retweet.page_pics.length != 4}}" class='image'>
-                  <block wx:for="{{item.retweet.page_pics}}">
-                    <image class="image-three" mode="aspectFill" src="{{item}}" />
+                  <block wx:for="{{item.retweet.page_pics}}" wx:for-item="pic">
+                    <image class="image-three" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.retweet.page_pics}}' />
                   </block>
                 </view>
                 <view wx-if="{{item.retweet.media_info != undefined}}" style="position:relative;">
@@ -167,11 +171,14 @@
               </block>
               <view class='image operation'>
                 <view>
-                  <image class="button-icon " mode="aspectFill" src="../../images/comment_light.png " /> 0
+                  <image class="button-icon " mode="aspectFill" src="../../images/comment_light.png " /> {{item.comment_num}}
                 </view>
 
-                <view>
-                  <image class="button-icon " mode="aspectFill" src="../../images/appreciate_light.png " /> 0
+                <view wx:if='{{item.hasLike == true}}'>
+                  <image class="button-icon " mode="aspectFill" src="../../images/appreciate_down.png " /> {{item.like_num}}
+                </view>
+                <view wx:else>
+                  <image class="button-icon " mode="aspectFill" src="../../images/appreciate_light.png " /> {{item.like_num}}
                 </view>
               </view>
             </view>
@@ -197,16 +204,16 @@
                 <rich-text nodes="{{item.text}}"></rich-text>
               </view>
               <view wx-if="{{item.page_pics != undefined && item.page_pics.length == 1}}" class='image'>
-                <image class="image-one" mode="aspectFill" src="{{item.page_pics[0]}}"></image>
+                <image class="image-one" mode="aspectFill" src="{{item.page_pics[0]}}" catchtap='previewImg' data-src='{{item.page_pics[0]}}' data-urls='{{item.page_pics}}'></image>
               </view>
               <view wx-if="{{item.page_pics != undefined && (item.page_pics.length == 2 || item.page_pics.length == 4)}}" class='image'>
-                <block wx:for="{{item.page_pics}}">
-                  <image class="image-two" mode="aspectFill" src="{{item}}" />
+                <block wx:for="{{item.page_pics}}" wx:for-item="pic">
+                  <image class="image-two" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.page_pics}}' />
                 </block>
               </view>
               <view wx-if="{{item.page_pics != undefined && item.page_pics.length > 2 &&  item.page_pics.length != 4}}" class='image'>
-                <block wx:for="{{item.page_pics}}">
-                  <image class="image-three" mode="aspectFill" src="{{item}}" />
+                <block wx:for="{{item.page_pics}}" wx:for-item="pic">
+                  <image class="image-three" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.page_pics}}' />
                 </block>
               </view>
               <view wx-if="{{item.media_info != undefined}}" style="position:relative;">
@@ -221,16 +228,16 @@
                   <rich-text nodes="<span style='color:#5073A0;'>@{{item.retweet.name}} </span>{{item.retweet.text}}"></rich-text>
                 </view>
                 <view wx-if="{{item.retweet.page_pics != undefined && item.retweet.page_pics.length == 1}}" class='image'>
-                  <image class="image-one" mode="aspectFill" src="{{item.retweet.page_pics[0]}}"></image>
+                  <image class="image-one" mode="aspectFill" src="{{item.retweet.page_pics[0]}}" catchtap='previewImg' data-src='{{item.retweet.page_pics[0]}}' data-urls='{{item.retweet.page_pics}}'></image>
                 </view>
                 <view wx-if="{{item.retweet.page_pics != undefined && (item.retweet.page_pics.length == 2 || item.retweet.page_pics.length == 4)}}" class='image'>
-                  <block wx:for="{{item.retweet.page_pics}}">
-                    <image class="image-two" mode="aspectFill" src="{{item}}" />
+                  <block wx:for="{{item.retweet.page_pics}}" wx:for-item="pic">
+                    <image class="image-two" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.retweet.page_pics}}' />
                   </block>
                 </view>
                 <view wx-if="{{item.retweet.page_pics != undefined && item.retweet.page_pics.length > 2 &&  item.retweet.page_pics.length != 4}}" class='image'>
-                  <block wx:for="{{item.retweet.page_pics}}">
-                    <image class="image-three" mode="aspectFill" src="{{item}}" />
+                  <block wx:for="{{item.retweet.page_pics}}" wx:for-item="pic">
+                    <image class="image-three" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.retweet.page_pics}}' />
                   </block>
                 </view>
                 <view wx-if="{{item.retweet.media_info != undefined}}" style="position:relative;">
@@ -242,11 +249,14 @@
               </block>
               <view class='image operation'>
                 <view>
-                  <image class="button-icon " mode="aspectFill" src="../../images/comment_light.png " /> 0
+                  <image class="button-icon " mode="aspectFill" src="../../images/comment_light.png " /> {{item.comment_num}}
                 </view>
 
-                <view>
-                  <image class="button-icon " mode="aspectFill" src="../../images/appreciate_light.png " /> 0
+                <view wx:if='{{item.hasLike == true}}'>
+                  <image class="button-icon " mode="aspectFill" src="../../images/appreciate_down.png " /> {{item.like_num}}
+                </view>
+                <view wx:else>
+                  <image class="button-icon " mode="aspectFill" src="../../images/appreciate_light.png " /> {{item.like_num}}
                 </view>
               </view>
             </view>
@@ -272,16 +282,16 @@
                 <rich-text nodes="{{item.content}}"></rich-text>
               </view>
               <view wx-if="{{item.pics != undefined && item.pics.length == 1}}" class='image'>
-                <image class="image-one" mode="aspectFill" src="{{item.pics[0]}}"></image>
+                <image class="image-one" mode="aspectFill" src="{{item.pics[0]}}" catchtap='previewImg' data-src='{{item.pics[0]}}' data-urls='{{item.pics}}'></image>
               </view>
               <view wx-if="{{item.pics != undefined && (item.pics.length == 2 || item.pics.length == 4)}}" class='image'>
-                <block wx:for="{{item.pics}}">
-                  <image class="image-two" mode="aspectFill" src="{{item}}" />
+                <block wx:for="{{item.pics}}" wx:for-item="pic">
+                  <image class="image-two" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.pics}}' />
                 </block>
               </view>
               <view wx-if="{{item.pics != undefined && item.pics.length > 2 &&  item.pics.length != 4}}" class='image'>
-                <block wx:for="{{item.pics}}">
-                  <image class="image-three" mode="aspectFill" src="{{item}}" />
+                <block wx:for="{{item.pics}}" wx:for-item="pic">
+                  <image class="image-three" mode="aspectFill" src="{{pic}}" catchtap='previewImg' data-src='{{pic}}' data-urls='{{item.pics}}' />
                 </block>
               </view>
 
@@ -289,8 +299,10 @@
                 <view>
                   <image class="button-icon " mode="aspectFill" src="../../images/comment_light.png " /> {{item.comment_num}}
                 </view>
-
-                <view>
+                <view wx:if='{{item.hasLike == true}}'>
+                  <image class="button-icon " mode="aspectFill" src="../../images/appreciate_down.png " /> {{item.like_num}}
+                </view>
+                <view wx:else>
                   <image class="button-icon " mode="aspectFill" src="../../images/appreciate_light.png " /> {{item.like_num}}
                 </view>
               </view>

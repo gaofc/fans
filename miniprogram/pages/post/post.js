@@ -10,6 +10,11 @@ Page({
   },
 
   formSubmit:function(e) {
+    wx.showToast({
+      title: '正在发表',
+      icon: 'loading'
+    })
+
     var openid = app.globalData.openid
     var text = e.detail.value.text
     var that = this
@@ -50,14 +55,10 @@ Page({
       },
       success: res => {
         console.log('setDiscuss success ', res)
-
-      },
-      fail: err => {
-        console.error('setDiscuss failed ', err)
-      },
-      complete: res => {
+        wx.hideToast()
+        
         wx.showModal({
-          title: '成功',
+          title: '讨论',
           content: '发布讨论成功',
           success(res) {
             wx.navigateBack({
@@ -65,6 +66,20 @@ Page({
             })
           }
         })
+        wx.setStorage({
+          key: 'hasPost',
+          data: true,
+        })
+      },
+      fail: err => {
+        console.error('setDiscuss failed ', err)
+        wx.showToast({
+          title: '发布讨论失败',
+        })
+      },
+      complete: res => {
+       
+
       }
     })
 

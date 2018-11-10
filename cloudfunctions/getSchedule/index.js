@@ -41,16 +41,23 @@ function parseHtmlPage(html) {
 exports.main = async(event, context) => {
   let {
     userInfo,
-    star_id
+    star_id,
+    page
   } = event
   let {
     openId,
     appId
   } = userInfo
 
-  var date = new Date();
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
+  var now = new Date();
+  if (now.getMonth() + page > 11) {
+    now = new Date(now.getFullYear() + 1, (now.getMonth() + page) % 12, 1);
+  } else {
+    now = new Date(now.getFullYear(), now.getMonth() + page, 1);
+  }
+
+  var year = now.getFullYear();
+  var month = now.getMonth() + 1;
 
   var url = `https://idol001.com/xingcheng/list/star-zhangyixing-6618/${year}/${month}/`
 
