@@ -48,7 +48,7 @@ Page({
     wx.cloud.callFunction({
       name: 'setDiscuss',
       data: {
-        star: app.globalData.currentStar,
+        star: app.globalData.currentStar.star_id,
         user: app.globalData.userInfo,
         content: text,
         pics: cloudPaths

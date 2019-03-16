@@ -41,7 +41,7 @@ function parseHtmlPage(html) {
 exports.main = async(event, context) => {
   let {
     userInfo,
-    star_id,
+    url,
     page
   } = event
   let {
@@ -59,7 +59,9 @@ exports.main = async(event, context) => {
   var year = now.getFullYear();
   var month = now.getMonth() + 1;
 
-  var url = `https://idol001.com/xingcheng/list/star-zhangyixing-6618/${year}/${month}/`
+  url += `${year}/${month}/`
+
+  //var url = `https://idol001.com/xingcheng/list/star-zhangyixing-6618/${year}/${month}/`
 
   return new Promise((resolve, reject) => {
     console.log("url:" + url)

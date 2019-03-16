@@ -8,7 +8,8 @@
     "pages/schedule/schedule",
     "pages/detail/detail",
     "pages/post/post",
-    "pages/comment/comment"
+    "pages/comment/comment",
+    "pages/add/add"
   ],
   "window": {
     "backgroundColor": "#f8f8f8",

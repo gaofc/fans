@@ -37,7 +37,7 @@ function parseJson(jsonStr) {
       if (pics != undefined) {
         tweet.page_pics = []
         for (var j = 0; j < pics.length; j++) {
-          var pic_url = pics[j].url
+          var pic_url = pics[j].large.url
           tweet.page_pics.push(pic_url)
         }
       }
@@ -62,7 +62,7 @@ function parseJson(jsonStr) {
         if (pics != undefined) {
           retweet.page_pics = []
           for (var j = 0; j < pics.length; j++) {
-            var pic_url = pics[j].url
+            var pic_url = pics[j].large.url
             retweet.page_pics.push(pic_url)
           }
         }
@@ -77,6 +77,7 @@ function parseJson(jsonStr) {
 exports.main = async(event, context) => {
   let {
     userInfo,
+    url,
     page
   } = event
   let {
@@ -85,7 +86,7 @@ exports.main = async(event, context) => {
   } = userInfo
 
   page = page == undefined ? 1 : page
-  var url = `https://m.weibo.cn/api/container/getIndex?uid=2706896955&luicode=10000011&lfid=100103type%3D1%26q%3D%E5%BC%A0%E8%89%BA%E5%85%B4&featurecode=20000320&type=uid&value=2706896955&containerid=1076032706896955&page=${page}`
+  url += `&page=${page}`
 
 
   return new Promise((resolve, reject) => {

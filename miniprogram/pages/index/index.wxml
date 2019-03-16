@@ -2,62 +2,20 @@
 
   <view>
     <view class='tab-img-view' bindtap='selectStar'>
-      <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
+      <image class="tab-img" src="{{currentStar.avatar_url}}"></image>
     </view>
     <navigator url="../post/post" wx:if="{{currentTab==3}}" class='post-btn'>发布</navigator>
     <image src='../../images/refresh.png' wx:if="{{currentTab==1}}" class='refresh-btn' bindtap='onRefresh' data-type='0'></image>
     <image src='../../images/refresh.png' wx:if="{{currentTab==2}}" class='refresh-btn' bindtap='onRefresh' data-type='1'></image>
     <image src='../../images/refresh.png' wx:if="{{currentTab==3}}" class='refresh-btn' bindtap='onRefresh' data-type='2'></image>
     <scroll-view scroll-x="true" wx:if="{{showSelect}}" class='star-select-tab' scroll-left='0'>
-      <view class='star'>
-        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
+      <view wx:for="{{starList}}" class='star'>
+        <image class="tab-img" src="{{item.avatar_url}}" bindtap='changeStar' data-star='{{item.star_id}}'></image>
         <view>
-          张艺兴
+          {{item.star_name}}
         </view>
       </view>
-      <view class='star'>
-        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
-        <view>
-          张艺兴艺兴艺兴
-        </view>
-      </view>
-      <view class='star'>
-        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
-        <view>
-          张艺兴
-        </view>
-      </view>
-      <view class='star'>
-        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
-        <view>
-          张艺兴
-        </view>
-      </view>
-      <view class='star'>
-        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
-        <view>
-          张艺兴
-        </view>
-      </view>
-      <view class='star'>
-        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
-        <view>
-          张艺兴
-        </view>
-      </view>
-      <view class='star'>
-        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
-        <view>
-          张艺兴
-        </view>
-      </view>
-      <view class='star'>
-        <image class="tab-img" src="https://tvax2.sinaimg.cn/crop.0.0.1242.1242.180/a157f83bly8fkd2w04kl0j20yi0yi763.jpg"></image>
-        <view>
-          张艺兴
-        </view>
-      </view>
-      <view class='star'>
+      <view class='star' bindtap='addStar'>
         <image class="tab-img" src="../../images/round_add_fill.png"></image>
         <view>
           添加
@@ -70,10 +28,10 @@
       <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">微博</view>
       <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">热门</view>
       <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">讨论</view>
-      <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">签到</view>
+      <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">积分</view>
       <view class="tab-item {{currentTab==5?'active':''}}" data-current="5" bindtap="swichNav">集合</view>
-      <view class="tab-item {{currentTab==6?'active':''}}" data-current="6" bindtap="swichNav">活动</view>
-      <view class="tab-item {{currentTab==7?'active':''}}" data-current="7" bindtap="swichNav">周边</view>
+      <!--<view class="tab-item {{currentTab==6?'active':''}}" data-current="6" bindtap="swichNav">活动</view>
+      <view class="tab-item {{currentTab==7?'active':''}}" data-current="7" bindtap="swichNav">周边</view>-->
     </scroll-view>
     <swiper current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx;margin-top:80rpx;">
       <!--推荐-->
@@ -311,35 +269,34 @@
           <view id='discuss_load' class='loading-more'>正在加载...</view>
         </scroll-view>
       </swiper-item>
-      <!--签到-->
+      <!--积分-->
       <swiper-item>
         <scroll-view scroll-y="true " class="scoll-h ">
           <view style=" background:#fff;margin-bottom:20rpx; ">
             <view class="item-ans " style='height:200rpx;'>
-
               <view class="expertInfo " style='margin-left:50rpx;'>
-                <view class="name ">您的排名：37</view>
-                <view class="tag ">连续签到76天</view>
-                <view class="tag ">累计签到120天</view>
+                <view class="name ">您的积分：{{score}}</view>
+                <view class="tag ">积分规则（每日上限30）</view>
+                <view class="tag ">签到：10 讨论：5 点赞：1 评论：2</view>
               </view>
-              <button class="sign-button ">签到</button>
+              <view wx:if='{{hasSign}}' class="sign-button ">已签到</view>
+              <button wx:else class="sign-button " bindtap='signin'>签到</button>
+
             </view>
           </view>
 
-          <block wx:for="{{[0,1,2,3,4,5,6,7,8,9,10]}} ">
-            <view style=" background:#fff;margin-bottom:20rpx; ">
-              <view class="item-ans ">
-                <view class="avatar ">
-                  <image class="img " src="../../images/tmp.jpg "></image>
-                </view>
-                <view class="expertInfo ">
-                  <view class="name ">欢颜</view>
-                  <view class="tag ">连续签到 100 天</view>
-                </view>
-                <view class="top-mark ">Top {{index+1}}</view>
+          <view style=" background:#fff;margin-bottom:20rpx; ">
+            <view wx:for="{{currentStar.score_rank}}" class="item-ans ">
+              <view class="avatar ">
+                <image class="img " src="{{item.avatar_url}}"></image>
               </view>
+              <view class="expertInfo ">
+                <view class="name ">{{item.nick_name}}</view>
+                <view class="tag ">积分：{{item.score}}</view>
+              </view>
+              <view class="top-mark ">Top {{index+1}}</view>
             </view>
-          </block>
+          </view>
         </scroll-view>
 
       </swiper-item>
@@ -351,7 +308,7 @@
             <view class="item-ans " style='height:200rpx;'>
 
               <view class="expertInfo " style='margin-left:50rpx;'>
-                <view class="name ">加入张艺兴粉丝QQ群或微信群</view>
+                <view class="name ">加入{{currentStar.star_name}}粉丝QQ群或微信群</view>
                 <view class="tag ">与志趣相投的朋友畅聊爱豆</view>
               </view>
             </view>
@@ -365,10 +322,11 @@
                   QQ群
                 </view>
                 <view>
-                  223232432432
+                  {{currentStar.qq_group_id}}
                 </view>
               </view>
-
+              <view>搜索群号进群
+              </view>
             </view>
           </view>
           <view style=" background:#fff;margin-bottom:10rpx; ">
@@ -378,7 +336,7 @@
                   微信群
                 </view>
                 <view>
-                  WECHAT_ID
+                  {{currentStar.wechat_id}}
                 </view>
               </view>
               <view>添加好友进群
@@ -392,7 +350,7 @@
                   公众号
                 </view>
                 <view>
-                  im_fc
+                  {{currentStar.weixin_public_id}}
                 </view>
               </view>
               <view>推荐爱豆信息
@@ -402,16 +360,16 @@
 
         </scroll-view>
 
+
       </swiper-item>
-      <!--活动-->
+      <!--
       <swiper-item class="tobedone ">
         活动，敬请期待
       </swiper-item>
-      <!--周边-->
       <swiper-item class="tobedone ">
         周边，敬请期待
       </swiper-item>
-
+-->
     </swiper>
   </view>
 </view>

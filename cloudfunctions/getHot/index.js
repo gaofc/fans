@@ -80,6 +80,7 @@ function parseJson(jsonStr) {
 exports.main = async (event, context) => {
   let {
     userInfo,
+    url,
     page
   } = event
   let {
@@ -88,8 +89,7 @@ exports.main = async (event, context) => {
   } = userInfo
 
   page = page == undefined ? 1 : page
-  var url = `https://m.weibo.cn/api/container/getIndex?containerid=100103type%3D60%26q%3D%E5%BC%A0%E8%89%BA%E5%85%B4%26t%3D0&page_type=searchall&page=${page}`
-
+  url += `&page=${page}`
 
   return new Promise((resolve, reject) => {
     console.log("url:" + url)

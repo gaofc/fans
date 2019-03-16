@@ -26,7 +26,10 @@ Page({
     discussPage: 0,
     discusses: [],
     hotPage: 1,
-    hotTweets: []
+    hotTweets: [],
+    scoreRank: [],
+    starList: [],
+    hasSign: false
   },
 
   onRefresh: function(e) {
@@ -36,19 +39,17 @@ Page({
     })
     var type = e.currentTarget.dataset.type
     var that = this
-    if(type == 0) {
+    if (type == 0) {
       that.setData({
         tweets: [],
         weiboPage: 1
       });
-    }
-    else if (type == 1) {
+    } else if (type == 1) {
       that.setData({
         hotTweets: [],
         hotPage: 1
       });
-    }
-    else if (type == 2) {
+    } else if (type == 2) {
       that.setData({
         discusses: [],
         discussPage: 0
@@ -67,11 +68,42 @@ Page({
     })
   },
 
+  addStar: function(e) {
+    wx.navigateTo({
+      url: '../add/add',
+    })
+  },
+
 
   selectStar: function(e) {
     this.setData({
       showSelect: !this.data.showSelect
     })
+  },
+
+  changeStar: function(e) {
+    var star_id = e.currentTarget.dataset.star
+    console.log(star_id)
+    wx.getStorage({
+      key: 'starList',
+      success: function(res) {
+        console.log(res.data)
+        var starList = res.data
+        for (var i = 0; i < starList.length; i++) {
+          if (starList[i].star_id == star_id) {
+            wx.setStorage({
+              key: 'star',
+              data: starList[i]
+            })
+            break
+          }
+        }
+        wx.reLaunch({
+          url: './index',
+        })
+      },
+    })
+
   },
 
   toDetail: function(e) {
@@ -115,6 +147,19 @@ Page({
       })
     }
   },
+  signin: function() {
+    wx.cloud.callFunction({
+      name: 'setSignIn',
+      data: {
+        star: app.globalData.currentStar.star_id,
+        nick_name: app.globalData.userInfo.nick_name,
+        avatar_url: app.globalData.userInfo.avatar_url
+      },
+      success: res => {
+        console.log('setSignIn suc', res)
+      }
+    })
+  },
   onLoad: function() {
     var that = this;
     //  高度自适应
@@ -146,159 +191,237 @@ Page({
       }
     })
 
-    this.weibo_observer = wx.createIntersectionObserver(this)
-    this.weibo_observer
-      .relativeTo('#weibo')
-      .observe('#weibo_load', (res) => {
-        console.log(res)
-        if (res.intersectionRatio > 0) {
-          wx.cloud.callFunction({
-            name: 'getWeiboList',
-            data: {
-              page: that.data.weiboPage
-            },
-            success: res => {
-              console.log('getWeiboList suc', res)
-              var newTw = res.result.tweets
-              var newNum = res.result.num
-              for (var i = 0; i < newNum.length; i++) {
-                for (var j = 0; j < newTw.length; j++) {
-                  if (newTw[j].id == newNum[i]._id) {
-                    newTw[j].comment_num = newNum[i].comment_num
-                    newTw[j].like_num = newNum[i].like_num
-                    break
-                  }
-                }
-              }
-              for (var i = 0; i < newTw.length; i++) {
-                if (newTw[i].comment_num == undefined) {
-                  newTw[i].comment_num = 0
-                  newTw[i].like_num = 0
-                }
-              }
-              var tw = that.data.tweets.concat(newTw)
-              that.setData({
-                tweets: tw,
-                weiboPage: that.data.weiboPage + 1
-              });
-            },
-            fail: err => {
-              console.error('getWeiboList failed', err)
-            },
-            complete: res => {}
-          })
-        }
-      });
+    wx.getStorage({
+      key: 'star',
+      success(res) {
+        console.log(res.data)
 
-    this.discuss_observer = wx.createIntersectionObserver(this)
-    this.discuss_observer
-      .relativeTo('#discuss')
-      .observe('#discuss_load', (res) => {
-        console.log(res)
-        if (res.intersectionRatio > 0) {
-          wx.cloud.callFunction({
-            name: 'getDiscuss',
-            data: {
-              page: that.data.discussPage
-            },
-            success: res => {
-              console.log('getDiscuss suc', res)
-              var dis = that.data.discusses.concat(res.result.data)
-              that.setData({
-                discusses: dis,
-                discussPage: that.data.discussPage + 1
-              });
-            },
-            fail: err => {
-              console.error('getDiscuss failed', err)
-            },
-            complete: res => {}
-          })
-        }
-      });
+        wx.cloud.callFunction({
+          name: 'getStarDetail',
+          data: {
+            star_id: res.data.star_id
+          },
+          success: res => {
+            app.globalData.currentStar = res.result.data[0]
+            that.setData({
+              currentStar: res.result.data[0],
+            })
+
+            wx.cloud.callFunction({
+              name: 'getScore',
+              data: {
+                star: app.globalData.currentStar.star_id
+              },
+              success: res => {
+                console.log('getScore', res)
+                var score = res.result.data[0].score
+                var update = res.result.data[0].update_date
 
 
-    this.hot_observer = wx.createIntersectionObserver(this)
-    this.hot_observer
-      .relativeTo('#hot')
-      .observe('#hot_load', (res) => {
-        console.log(res)
-        if (res.intersectionRatio > 0) {
-          wx.cloud.callFunction({
-            name: 'getHot',
-            data: {
-              page: that.data.hotPage
-            },
-            success: res => {
-              console.log('getHot suc', res)
-              if (res.result != undefined) {
-                var newTw = res.result.tweets
-                var newNum = res.result.num
-                for (var i = 0; i < newNum.length; i++) {
-                  for (var j = 0; j < newTw.length; j++) {
-                    if (newTw[j].id == newNum[i]._id) {
-                      newTw[j].comment_num = newNum[i].comment_num
-                      newTw[j].like_num = newNum[i].like_num
-                      break
-                    }
-                  }
-                }
-                for (var i = 0; i < newTw.length; i++) {
-                  if (newTw[i].comment_num == undefined) {
-                    newTw[i].comment_num = 0
-                    newTw[i].like_num = 0
-                  }
-                }
-                var tw = that.data.hotTweets.concat(newTw)
+                console.log('getDate', update.getDate())
+
                 that.setData({
-                  hotTweets: tw,
-                  hotPage: that.data.hotPage + 1
-                });
-              }
-            },
-            fail: err => {
-              console.error('getHot failed', err)
-            },
-            complete: res => {}
-          })
-        }
-      });
-
-    this.schedule_observer = wx.createIntersectionObserver(this)
-    this.schedule_observer
-      .relativeTo('#recommend')
-      .observe('#schedule_load', (res) => {
-        console.log(res)
-        if (res.intersectionRatio > 0) {
-          wx.cloud.callFunction({
-            name: 'getSchedule',
-            data: {
-              star_id: app.globalData.currentStar,
-              page: that.data.schedulePage
-            },
-            success: res => {
-              console.log('getSchedule suc', res)
-              if (res.result.schedules.length < 1) {
-                wx.showToast({
-                  title: '没有更多行程了',
-                  image: '../../images/dislike.png'
+                  score: score
                 })
-              }
-              var sch = that.data.schedules.concat(res.result.schedules)
-              var openid = res.result.openid
-              app.globalData.openid = openid
-              that.setData({
-                schedules: sch,
-                schedulePage: that.data.schedulePage + 1
+              },
+              fail: res => { }
+            })
+
+
+            that.weibo_observer = wx.createIntersectionObserver(that)
+            that.weibo_observer
+              .relativeTo('#weibo')
+              .observe('#weibo_load', (res) => {
+                console.log(res)
+                if (res.intersectionRatio > 0) {
+
+                  console.log('app.globalData.currentStar', app.globalData.currentStar)
+
+                  wx.cloud.callFunction({
+                    name: 'getWeiboList',
+                    data: {
+                      url: app.globalData.currentStar.weibo_link,
+                      page: that.data.weiboPage
+                    },
+                    success: res => {
+                      console.log('getWeiboList suc', res)
+                      var newTw = res.result.tweets
+                      var newNum = res.result.num
+                      for (var i = 0; i < newNum.length; i++) {
+                        for (var j = 0; j < newTw.length; j++) {
+                          if (newTw[j].id == newNum[i]._id) {
+                            newTw[j].comment_num = newNum[i].comment_num
+                            newTw[j].like_num = newNum[i].like_num
+                            break
+                          }
+                        }
+                      }
+                      for (var i = 0; i < newTw.length; i++) {
+                        if (newTw[i].comment_num == undefined) {
+                          newTw[i].comment_num = 0
+                          newTw[i].like_num = 0
+                        }
+                      }
+                      var tw = that.data.tweets.concat(newTw)
+                      that.setData({
+                        tweets: tw,
+                        weiboPage: that.data.weiboPage + 1
+                      });
+                    },
+                    fail: err => {
+                      console.error('getWeiboList failed', err)
+                    },
+                    complete: res => {}
+                  })
+                }
               });
-            },
-            fail: err => {
-              console.error('getSchedule failed', err)
-            },
-            complete: res => {}
-          })
-        }
-      });
+
+            that.discuss_observer = wx.createIntersectionObserver(that)
+            that.discuss_observer
+              .relativeTo('#discuss')
+              .observe('#discuss_load', (res) => {
+                console.log(res)
+                if (res.intersectionRatio > 0) {
+                  wx.cloud.callFunction({
+                    name: 'getDiscuss',
+                    data: {
+                      star: app.globalData.currentStar.star_id,
+                      page: that.data.discussPage
+                    },
+                    success: res => {
+                      console.log('getDiscuss suc', res)
+                      var dis = that.data.discusses.concat(res.result.data)
+                      that.setData({
+                        discusses: dis,
+                        discussPage: that.data.discussPage + 1
+                      });
+                    },
+                    fail: err => {
+                      console.error('getDiscuss failed', err)
+                    },
+                    complete: res => {}
+                  })
+                }
+              });
+
+            that.hot_observer = wx.createIntersectionObserver(that)
+            that.hot_observer
+              .relativeTo('#hot')
+              .observe('#hot_load', (res) => {
+                console.log(res)
+                if (res.intersectionRatio > 0) {
+                  wx.cloud.callFunction({
+                    name: 'getHot',
+                    data: {
+                      url: app.globalData.currentStar.hot_link,
+                      page: that.data.hotPage
+                    },
+                    success: res => {
+                      console.log('getHot suc', res)
+                      if (res.result != undefined) {
+                        var newTw = res.result.tweets
+                        var newNum = res.result.num
+                        for (var i = 0; i < newNum.length; i++) {
+                          for (var j = 0; j < newTw.length; j++) {
+                            if (newTw[j].id == newNum[i]._id) {
+                              newTw[j].comment_num = newNum[i].comment_num
+                              newTw[j].like_num = newNum[i].like_num
+                              break
+                            }
+                          }
+                        }
+                        for (var i = 0; i < newTw.length; i++) {
+                          if (newTw[i].comment_num == undefined) {
+                            newTw[i].comment_num = 0
+                            newTw[i].like_num = 0
+                          }
+                        }
+                        var tw = that.data.hotTweets.concat(newTw)
+                        that.setData({
+                          hotTweets: tw,
+                          hotPage: that.data.hotPage + 1
+                        });
+                      }
+                    },
+                    fail: err => {
+                      console.error('getHot failed', err)
+                    },
+                    complete: res => {}
+                  })
+                }
+              });
+
+            that.schedule_observer = wx.createIntersectionObserver(that)
+            that.schedule_observer
+              .relativeTo('#recommend')
+              .observe('#schedule_load', (res) => {
+                console.log(res)
+                if (res.intersectionRatio > 0) {
+                  wx.cloud.callFunction({
+                    name: 'getSchedule',
+                    data: {
+                      url: app.globalData.currentStar.schecule_link,
+                      page: that.data.schedulePage
+                    },
+                    success: res => {
+                      console.log('getSchedule suc', res)
+                      if (res.result.schedules.length < 1) {
+                        wx.showToast({
+                          title: '没有更多行程了',
+                          image: '../../images/dislike.png'
+                        })
+                      }
+                      var sch = that.data.schedules.concat(res.result.schedules)
+                      var openid = res.result.openid
+                      app.globalData.openid = openid
+                      that.setData({
+                        schedules: sch,
+                        schedulePage: that.data.schedulePage + 1
+                      });
+                    },
+                    fail: err => {
+                      console.error('getSchedule failed', err)
+                    },
+                    complete: res => {}
+                  })
+                }
+              });
+          },
+          fail: err => {
+            console.error('setUser failed', err)
+          },
+          complete: res => {}
+        })
+      },
+      fail(res) {
+        wx.showModal({
+          title: '提示',
+          content: '请至少选择一个要关注的明星',
+          success(res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+              wx.navigateTo({
+                url: '../add/add',
+              })
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      }
+    })
+
+    wx.getStorage({
+      key: 'starList',
+      success: function(res) {
+        console.log(res.data)
+        app.globalData.starList = res.data
+        that.setData({
+          starList: res.data
+        })
+      },
+    })
+
   },
 
   onShow: function() {
